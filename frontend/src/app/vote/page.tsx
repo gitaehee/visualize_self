@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // ✅ 페이지 이동을 위한 useRouter 추가
 import { css } from "@emotion/react";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"; // 기본값 추가
@@ -50,10 +51,13 @@ const buttonStyle = css`
 
 
 export default function Vote() {
+  const router = useRouter(); // ✅ 페이지 이동을 위한 useRouter 추가
   const genres = ["스릴러", "로맨스", "역사", "판타지", "액션", "코미디", "뮤지컬", "애니메이션"];
   const [votes, setVotes] = useState<{ [key: string]: number }>({});
 
   const handleVote = async (genre: string) => {
+    const confirmed = confirm(`'${genre}'를 선택하시겠습니까?`); // ✅ 사용자에게 확인창 표시
+    if (!confirmed) return; // 취소 버튼을 누르면 실행 중단
 
       // ✅ API 요청 URL이 올바른지 콘솔에서 확인
     console.log("API 요청 URL:", `${API_BASE_URL}/vote`);
@@ -78,6 +82,8 @@ export default function Vote() {
       if (data.votes) {
         setVotes(data.votes); // 업데이트된 투표 결과 반영
       }
+      
+      router.push("/vote-complete"); // ✅ "확인"을 누르면 투표 완료 페이지로 이동
 
     } catch (error) {
       console.error("투표 요청 실패:", error);
