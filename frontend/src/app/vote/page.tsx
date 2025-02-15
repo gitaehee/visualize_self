@@ -1,8 +1,47 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { css } from "@emotion/react";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"; // 기본값 추가
+
+
+const containerStyle = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  min-height: 100vh;
+`;
+
+const titleStyle = css`
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+`;
+
+const buttonContainerStyle = css`
+  display: flex;
+  gap: 1rem;
+`;
+
+const buttonStyle = css`
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s ease-in-out;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: #2563eb;
+  }
+`;
+
+
+
 
 export default function Vote() {
   const [votes, setVotes] = useState<{ option1: number; option2: number; option3: number }>({
@@ -73,25 +112,17 @@ export default function Vote() {
 
 
 
-
-
-
-
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="title">실시간 투표</h1>
-      <div className="flex space-x-4">
-        {["option1", "option2", "option3"].map((option) => (
-          <button
-            key={option}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-            onClick={() => handleVote(option)}
-          >
-            {option} 투표
-          </button>
-        ))}
+      <div css={containerStyle}>
+        <h1 css={titleStyle}>실시간 투표</h1>
+        <div css={buttonContainerStyle}>
+          {["option1", "option2", "option3"].map((option) => (
+            <button key={option} css={buttonStyle} onClick={() => handleVote(option)}>
+              {option} 투표
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
     );
   }
   

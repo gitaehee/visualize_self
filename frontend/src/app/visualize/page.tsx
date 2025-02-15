@@ -1,10 +1,22 @@
+"use client";
+import { css } from "@emotion/react";
+
+const titleStyle = css`
+  text-align: center;
+  margin-top: 100px;
+`;
+
+const messageStyle = css`
+  text-align: center;
+`;
+
 export default function Visualize() {
     
     return (
       <div>
-        <h4 className="title">시각화 페이지</h4> {
+        <h4 css={titleStyle}>시각화 페이지</h4> {
             <div>
-                <p className="message">그래프 넣을 거임</p>
+                <p css={messageStyle}>그래프 넣을 거임</p>
             </div>
         }
       </div>
