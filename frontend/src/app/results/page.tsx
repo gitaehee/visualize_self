@@ -36,18 +36,14 @@ const voteItemStyle = css`
 
 
 export default function Results() {
-  const [votes, setVotes] = useState<{ option1: number; option2: number; option3: number }>({
-    option1: 0,
-    option2: 0,
-    option3: 0,
-  });
+  const [votes, setVotes] = useState<{ [key: string]: number }>({}); // ✅ 동적으로 옵션 수용 가능
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/results`);
         const data = await response.json();
-        setVotes(data);
+        setVotes(data); // ✅ 8개 옵션을 백엔드에서 받아 자동 반영
       } catch (error) {
         console.error("Failed to fetch results:", error);
       }
@@ -59,10 +55,10 @@ export default function Results() {
   return (
     <div css={containerStyle}>
       <h1 css={titleStyle}>투표 결과 페이지</h1>
-      <p css={subtitleStyle}>현재 1등은?</p>
+      <p css={subtitleStyle}>현재 투표 현황</p>
       <div css={votesContainerStyle}>
-        {Object.entries(votes).map(([key, value]) => (
-          <p key={key} css={voteItemStyle}>{`${key}: ${value}표`}</p>
+        {Object.entries(votes).map(([genre, count]) => (
+          <p key={genre} css={voteItemStyle}>{`${genre}: ${count}표`}</p>
         ))}
       </div>
     </div>

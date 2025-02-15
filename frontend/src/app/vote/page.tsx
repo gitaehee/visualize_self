@@ -21,12 +21,16 @@ const titleStyle = css`
 `;
 
 const buttonContainerStyle = css`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2x4 그리드 형태 */
   gap: 1rem;
+  width: 100%;
+  max-width: 400px;
 `;
 
+
 const buttonStyle = css`
-  padding: 0.5rem 1rem;
+  padding: 0.75rem;
   background-color: #3b82f6;
   color: white;
   border-radius: 0.375rem;
@@ -34,6 +38,7 @@ const buttonStyle = css`
   border: none;
   cursor: pointer;
   font-size: 1rem;
+  text-align: center;
 
   &:hover {
     background-color: #2563eb;
@@ -43,14 +48,12 @@ const buttonStyle = css`
 
 
 
-export default function Vote() {
-  const [votes, setVotes] = useState<{ option1: number; option2: number; option3: number }>({
-    option1: 0,
-    option2: 0,
-    option3: 0,
-  });
 
-  const handleVote = async (option: string) => {
+export default function Vote() {
+  const genres = ["스릴러", "로맨스", "역사", "판타지", "액션", "코미디", "뮤지컬", "애니메이션"];
+  const [votes, setVotes] = useState<{ [key: string]: number }>({});
+
+  const handleVote = async (genre: string) => {
 
       // ✅ API 요청 URL이 올바른지 콘솔에서 확인
     console.log("API 요청 URL:", `${API_BASE_URL}/vote`);
@@ -58,11 +61,11 @@ export default function Vote() {
     try {
       const response = await fetch(`${API_BASE_URL}/vote`, {
         method: "POST",
-        mode: "cors",  // CORS 요청 방식 명시
+        mode: "cors",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ option }),
+        body: JSON.stringify({ option: genre }),
       });
 
       console.log("Response status:", response.status);  // ✅ 응답 상태 출력
@@ -112,17 +115,17 @@ export default function Vote() {
 
 
 
-    return (
-      <div css={containerStyle}>
-        <h1 css={titleStyle}>실시간 투표</h1>
-        <div css={buttonContainerStyle}>
-          {["option1", "option2", "option3"].map((option) => (
-            <button key={option} css={buttonStyle} onClick={() => handleVote(option)}>
-              {option} 투표
-            </button>
-          ))}
-        </div>
+  return (
+    <div css={containerStyle}>
+      <h1 css={titleStyle}>실시간 투표</h1>
+      <div css={buttonContainerStyle}>
+        {genres.map((genre) => (
+          <button key={genre} css={buttonStyle} onClick={() => handleVote(genre)}>
+            {genre} 투표
+          </button>
+        ))}
       </div>
-    );
+    </div>
+  );
   }
   
