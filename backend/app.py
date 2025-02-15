@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, json  # ✅ json 모듈 추가
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -31,7 +31,10 @@ def vote():
 
 @app.route("/results", methods=["GET"])
 def get_results():
-    return jsonify(votes)
+    return app.response_class(
+        response=json.dumps(votes, ensure_ascii=False, indent=2),  # ✅ 사람이 읽기 쉽게 변환
+        mimetype="application/json"
+    )
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
