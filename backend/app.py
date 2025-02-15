@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
+# CORS 설정 (프론트엔드와 통신 허용)
 
 # 투표 결과 저장 (간단한 in-memory 데이터)
 votes = {"option1": 0, "option2": 0, "option3": 0}

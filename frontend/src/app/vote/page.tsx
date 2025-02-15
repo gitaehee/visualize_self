@@ -14,17 +14,20 @@ export default function Vote() {
   const handleVote = async (option: string) => {
 
       // ✅ API 요청 URL이 올바른지 콘솔에서 확인
-      console.log("API 요청 URL:", `${API_BASE_URL}/vote`);
+    console.log("API 요청 URL:", `${API_BASE_URL}/vote`);
 
     try {
       const response = await fetch(`${API_BASE_URL}/vote`, {
         method: "POST",
+        mode: "cors",  // CORS 요청 방식 명시
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ option }),
       });
 
+      console.log("Response status:", response.status);  // ✅ 응답 상태 출력
+      
       if (!response.ok) {
         throw new Error(`서버 오류: ${response.status}`);
       }
@@ -43,7 +46,15 @@ export default function Vote() {
     console.log("API 요청 URL:", `${API_BASE_URL}/results`);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/results`);
+      const response = await fetch(`${API_BASE_URL}/results`, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("Response status:", response.status);  // ✅ 응답 상태 출력
 
       if (!response.ok) {
         throw new Error(`서버 오류: ${response.status}`);
