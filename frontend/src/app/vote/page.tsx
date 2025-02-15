@@ -52,7 +52,7 @@ const buttonStyle = css`
 
 export default function Vote() {
   const router = useRouter(); // ✅ 페이지 이동을 위한 useRouter 추가
-  const genres = ["스릴러", "로맨스", "역사", "판타지", "액션", "코미디", "뮤지컬", "애니메이션"];
+  const genres = ["로맨스", "뮤지컬", "스릴러", "애니메이션", "액션", "역사", "코미디", "판타지"];
   const [votes, setVotes] = useState<{ [key: string]: number }>({});
 
   const handleVote = async (genre: string) => {
@@ -82,7 +82,7 @@ export default function Vote() {
       if (data.votes) {
         setVotes(data.votes); // 업데이트된 투표 결과 반영
       }
-      
+
       router.push("/vote-complete"); // ✅ "확인"을 누르면 투표 완료 페이지로 이동
 
     } catch (error) {
