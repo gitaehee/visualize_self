@@ -10,6 +10,7 @@ const globalStyles = css`
     margin: 0;
     background: #303030;
     color: white;
+    font-family: "Pretendard", sans-serif;
   }
 `;
 
