@@ -1,5 +1,6 @@
 "use client";
 import { css } from "@emotion/react";
+import MovieBarChart from "./barchart/MovieBarChart";
 
 const titleStyle = css`
   text-align: center;
@@ -16,7 +17,7 @@ export default function Visualize() {
       <div>
         <h4 css={titleStyle}>시각화 페이지</h4> {
             <div>
-                <p css={messageStyle}>그래프 넣을 거임</p>
+                <MovieBarChart/>
             </div>
         }
       </div>
