@@ -24,7 +24,10 @@ def vote():
     data = request.json
     option = data.get("option")
 
+    print("📌 받은 option 값:", option)  # ✅ 백엔드에서 option 값 확인
+
     if option not in votes:
+        print("❌ 유효하지 않은 option:", option)  # ✅ 백엔드에서 오류 출력
         return jsonify({"error": "Invalid option"}), 400
 
     votes[option] += 1  # 투표 카운트 증가
