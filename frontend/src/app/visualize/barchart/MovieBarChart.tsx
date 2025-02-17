@@ -1,3 +1,5 @@
+import Image from "next/image";  // ✅ next/image 추가
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ResponsiveBar } from '@nivo/bar';
@@ -43,7 +45,7 @@ const MovieBarChart = () => {
         <strong>{d.movie_name}</strong>
         <div>👥 {d.audience_count.toLocaleString()}명</div>
         {d.poster_url && (
-          <img 
+          <Image
             src={d.poster_url} 
             alt={d.movie_name} 
             style={{ width: '90px', height: '135px', marginTop: '8px', borderRadius: '5px' }} 

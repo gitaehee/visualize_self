@@ -1,23 +1,30 @@
 "use client";
 import { css } from "@emotion/react";
 import MovieBarChart from "./barchart/MovieBarChart";
+import DistributorPieChart from "./piechart/DistributorPieChart";
+import GenreTrendsChart from "./bumpchart/GenreTrendsChart";
 
 const titleStyle = css`
   text-align: center;
   margin-top: 100px;
 `;
 
-const messageStyle = css`
-  text-align: center;
-`;
+const containerStyle = css`
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content: center;
+`
 
 export default function Visualize() {
     
     return (
       <div>
         <h4 css={titleStyle}>시각화 페이지</h4> {
-            <div>
+            <div css={containerStyle}>
                 <MovieBarChart/>
+                <DistributorPieChart/>
+                <GenreTrendsChart/>
             </div>
         }
       </div>
