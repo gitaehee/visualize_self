@@ -77,7 +77,10 @@ const descriptionStyle = css`
   flex-direction: column;
   justify-content: center;
   text-align: left;
-  padding-left: 10px;
+
+  /* 설명글 왼쪽 정렬 */
+  padding-left: 10px; 
+
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   pointer-events: none;
@@ -116,16 +119,17 @@ const movies = [
 
 export default function Vote() {
   const router = useRouter();
+
+  {/* 모바일에서 포스터 클릭하면 설명 보이게 */}
   const [activeMovie, setActiveMovie] = useState<string | null>(null);
 
   const toggleDescription = (title: string) => {
     setActiveMovie(activeMovie === title ? null : title);
   };
 
+
   const handleVote = async (title: string) => {
   console.log("📌 전송할 option 값:", title);
-
-  
 
   if (!title || typeof title !== "string") {
     console.error("❌ 잘못된 option 값:", title);

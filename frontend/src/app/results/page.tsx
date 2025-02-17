@@ -10,7 +10,9 @@ const containerStyle = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  /*
   margin-top: 100px;
+  */
   min-height: 100vh;
 `;
 
@@ -32,6 +34,7 @@ const votesContainerStyle = css`
 const voteItemStyle = css`
   font-size: 1.125rem;
 `;
+
 
 
 
@@ -61,6 +64,7 @@ export default function Results() {
 
   return (
     <div css={containerStyle}>
+      {/*
       <h1 css={titleStyle}>투표 결과 페이지</h1>
       <p css={subtitleStyle}>현재 투표 현황</p>
       <div css={votesContainerStyle}>
@@ -68,11 +72,12 @@ export default function Results() {
           <p key={genre} css={voteItemStyle}>{`${genre}: ${count}표`}</p>
         ))}
       </div>
+      */}
 
       {/* ✅ Streamlit 결과를 불러와서 시각화 */}
       <iframe
         src="http://localhost:8501/?graph=bar"
-        style={{ width: "100%", maxWidth: "900px", height: "600px", border: "none", marginTop: "20px" }} // ✅ 인라인 스타일 사용
+        style={{ width: "100%", maxWidth: "100vw", height: "100vh", overflow:"hidden", border: "none" }} // ✅ 인라인 스타일 사용, 가로 꽉 채우기
         title="Streamlit Visualization"
       />
     </div>
