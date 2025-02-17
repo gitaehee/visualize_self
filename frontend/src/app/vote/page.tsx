@@ -101,14 +101,14 @@ const buttonStyle = css`
 `;
 
 const movies = [
-  { title: "사랑이야기", genre: "로맨스", director: "감독 A", actors: "배우1, 배우2", summary: "사랑 이야기", poster: "/posters/romance.svg" },
-  { title: "라라랜드", genre: "뮤지컬", director: "감독 B", actors: "배우3, 배우4", summary: "음악과 춤 이야기", poster: "/posters/musical.svg" },
-  { title: "무서워", genre: "스릴러", director: "감독 C", actors: "배우5, 배우6", summary: "긴장감 넘치는 이야기", poster: "/posters/thriller.svg" },
-  { title: "애니메", genre: "애니메이션", director: "감독 D", actors: "배우7, 배우8", summary: "애니메이션 모험", poster: "/posters/animation.svg" },
-  { title: "액션히어로", genre: "액션", director: "감독 E", actors: "배우9, 배우10", summary: "스릴 넘치는 액션", poster: "/posters/action.svg" },
-  { title: "역사히스토리", genre: "역사", director: "감독 F", actors: "배우11, 배우12", summary: "역사적 사실 기반", poster: "/posters/history.svg" },
-  { title: "코미디하하하", genre: "코미디", director: "감독 G", actors: "배우13, 배우14", summary: "유쾌한 이야기", poster: "/posters/comedy.svg" },
-  { title: "판타지세계", genre: "판타지", director: "감독 H", actors: "배우15, 배우16", summary: "마법과 모험", poster: "/posters/fantasy.svg" },
+  { title: "사랑이야기", genre: "로맨스", director: "감독 A", actors: "배우1, 배우2", runngingtime:"1시간", summary: "사랑 이야기", poster: "/posters/romance.svg" },
+  { title: "라라랜드", genre: "뮤지컬", director: "감독 B", actors: "배우3, 배우4", runngingtime:"2시간", summary: "음악과 춤 이야기", poster: "/posters/musical.svg" },
+  { title: "무서워", genre: "스릴러", director: "감독 C", actors: "배우5, 배우6", runngingtime:"2시간", summary: "긴장감 넘치는 이야기", poster: "/posters/thriller.svg" },
+  { title: "애니메", genre: "애니메이션", director: "감독 D", actors: "배우7, 배우8", runngingtime:"1시간", summary: "애니메이션 모험", poster: "/posters/animation.svg" },
+  { title: "액션히어로", genre: "액션", director: "감독 E", actors: "배우9, 배우10", runngingtime:"3시간", summary: "스릴 넘치는 액션", poster: "/posters/action.svg" },
+  { title: "역사히스토리", genre: "역사", director: "감독 F", actors: "배우11, 배우12", runngingtime:"3시간", summary: "역사적 사실 기반", poster: "/posters/history.svg" },
+  { title: "코미디하하하", genre: "코미디", director: "감독 G", actors: "배우13, 배우14", runngingtime:"2시간", summary: "유쾌한 이야기", poster: "/posters/comedy.svg" },
+  { title: "판타지세계", genre: "판타지", director: "감독 H", actors: "배우15, 배우16", runngingtime:"3시간", summary: "마법과 모험", poster: "/posters/fantasy.svg" },
 ];
 
 export default function Vote() {
@@ -164,6 +164,7 @@ return (
                 <p>장르: {movie.genre}</p>
                 <p>감독: {movie.director}</p>
                 <p>출연: {movie.actors}</p>
+                <p>상영시간: {movie.runngingtime}</p>
                 <p>{movie.summary}</p>
               </div>
               <img src={movie.poster} alt={movie.title} css={posterStyle} />
