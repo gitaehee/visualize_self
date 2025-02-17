@@ -14,6 +14,18 @@ st.title("🎬 영화 장르 투표 결과")
 
 st.write("실시간 투표 결과를 확인하세요!")
 
+# 영화 제목을 장르로 변환하는 매핑
+genre_mapping = {
+    "사랑이야기": "로맨스",
+    "라라랜드": "뮤지컬",
+    "무서워": "스릴러",
+    "애니메": "애니메이션",
+    "액션히어로": "액션",
+    "역사히스토리": "역사",
+    "코미디하하하": "코미디",
+    "판타지세계": "판타지",
+}
+
 try:
     headers = {
         "Content-Type": "application/json",
@@ -41,7 +53,7 @@ try:
     else:
         # ✅ 투표 수가 많은 순으로 정렬
         sorted_votes = sorted(votes.items(), key=lambda x: x[1], reverse=False)
-        genres = [item[0] for item in sorted_votes]
+        genres = [genre_mapping.get(item[0], item[0]) for item in sorted_votes]
         vote_counts = [item[1] for item in sorted_votes]
 
         # ✅ 그래프 그리기
