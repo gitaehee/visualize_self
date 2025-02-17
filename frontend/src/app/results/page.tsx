@@ -43,6 +43,13 @@ export default function Results() {
       try {
         const response = await fetch(`${API_BASE_URL}/results`);
         const data = await response.json();
+
+        // 객체 형태를 차트용 배열로 변환
+        const formattedData = Object.entries(data).map(([key, value]) => ({
+          name: key,
+          votes: value as number,
+        }));
+
         setVotes(data); // ✅ 8개 옵션을 백엔드에서 받아 자동 반영
       } catch (error) {
         console.error("Failed to fetch results:", error);
@@ -61,6 +68,13 @@ export default function Results() {
           <p key={genre} css={voteItemStyle}>{`${genre}: ${count}표`}</p>
         ))}
       </div>
+
+      {/* ✅ Streamlit 결과를 불러와서 시각화 */}
+      <iframe
+        src="http://localhost:8501/?graph=bar"
+        style={{ width: "100%", maxWidth: "900px", height: "600px", border: "none", marginTop: "20px" }} // ✅ 인라인 스타일 사용
+        title="Streamlit Visualization"
+      />
     </div>
   );
 }
