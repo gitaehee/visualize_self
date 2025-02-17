@@ -2,6 +2,11 @@ import streamlit as st
 import requests
 import matplotlib.pyplot as plt
 
+# y축 한글 깨짐 해결
+plt.rcParams['font.family'] ='AppleGothic'
+plt.rcParams['axes.unicode_minus'] =False
+
+
 # ✅ API에서 투표 데이터 가져오기
 API_URL = "http://localhost:5000/results"  # Flask 백엔드 API 주소
 
@@ -35,7 +40,7 @@ try:
     
     else:
         # ✅ 투표 수가 많은 순으로 정렬
-        sorted_votes = sorted(votes.items(), key=lambda x: x[1], reverse=True)
+        sorted_votes = sorted(votes.items(), key=lambda x: x[1], reverse=False)
         genres = [item[0] for item in sorted_votes]
         vote_counts = [item[1] for item in sorted_votes]
 
