@@ -50,6 +50,7 @@ const posterContainerStyle = css`
   background: white;
   border-radius: 8px;
   overflow: hidden;
+  cursor: pointer;
 
   &:hover .description {
     opacity: 1;
@@ -111,11 +112,20 @@ const movies = [
   { title: "판타지세계", genre: "판타지", director: "감독 H", actors: "배우15, 배우16", runngingtime:"3시간", summary: "마법과 모험", poster: "/posters/fantasy.svg" },
 ];
 
+
+
 export default function Vote() {
   const router = useRouter();
+  const [activeMovie, setActiveMovie] = useState<string | null>(null);
+
+  const toggleDescription = (title: string) => {
+    setActiveMovie(activeMovie === title ? null : title);
+  };
 
   const handleVote = async (title: string) => {
   console.log("📌 전송할 option 값:", title);
+
+  
 
   if (!title || typeof title !== "string") {
     console.error("❌ 잘못된 option 값:", title);
@@ -158,8 +168,14 @@ return (
       <div css={gridContainerStyle}>
         {movies.map((movie) => (
           <div key={movie.title} css={movieCardStyle}>
-            <div css={posterContainerStyle}>
-              <div css={descriptionStyle} className="description">
+            <div 
+              css={posterContainerStyle} 
+              onClick={() => toggleDescription(movie.title)}
+            >
+            <div 
+              css={[descriptionStyle, activeMovie === movie.title && { opacity: 1, pointerEvents: "auto" }]} 
+              className="description"
+            >
                 <p><strong>{movie.title}</strong></p>
                 <p>장르: {movie.genre}</p>
                 <p>감독: {movie.director}</p>
