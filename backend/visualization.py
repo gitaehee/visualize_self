@@ -4,7 +4,7 @@ import plotly.express as px
 import pandas as pd
 
 # API에서 투표 데이터 가져오기
-API_URL = "http://localhost:5000/results"  # Flask 백엔드 API 주소
+API_URL = "http://localhost:5001/results"  # Flask 백엔드 API 주소
 
 st.title("🎬 영화 투표 결과")
 st.write("실시간 투표 결과를 확인하세요!")
