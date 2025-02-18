@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { css } from "@emotion/react";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5001";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
 const containerStyle = css`
   display: flex;
@@ -39,7 +40,6 @@ const movieCardStyle = css`
   text-align: center;
   position: relative;
 `;
-
 
 const posterContainerStyle = css`
   position: relative;
@@ -80,7 +80,7 @@ const descriptionStyle = css`
   text-align: left;
 
   /* 설명글 왼쪽 정렬 */
-  padding-left: 10px; 
+  padding-left: 10px;
 
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
@@ -106,83 +106,154 @@ const buttonStyle = css`
 `;
 
 const movies = [
-  { title: "애프터 선셋", genre: "로맨스", director: "감독 A", actors: "배우1, 배우2", runngingtime:"1시간", summary: "사랑 이야기", poster: "/posters/romance.svg" },
-  { title: "우는 남자", genre: "뮤지컬", director: "감독 B", actors: "배우3, 배우4", runngingtime:"2시간", summary: "음악과 춤 이야기", poster: "/posters/musical.svg" },
-  { title: "무서워", genre: "스릴러", director: "감독 C", actors: "배우5, 배우6", runngingtime:"2시간", summary: "긴장감 넘치는 이야기", poster: "/posters/thriller.svg" },
-  { title: "장화 안 신은 고양이", genre: "애니메이션", director: "감독 D", actors: "배우7, 배우8", runngingtime:"1시간", summary: "애니메이션 모험", poster: "/posters/animation.svg" },
-  { title: "액션히어로", genre: "액션", director: "감독 E", actors: "배우9, 배우10", runngingtime:"3시간", summary: "스릴 넘치는 액션", poster: "/posters/action.svg" },
-  { title: "태정태세문단세", genre: "역사", director: "감독 F", actors: "배우11, 배우12", runngingtime:"3시간", summary: "역사적 사실 기반", poster: "/posters/history.svg" },
-  { title: "아마..존", genre: "코미디", director: "감독 G", actors: "배우13, 배우14", runngingtime:"2시간", summary: "유쾌한 이야기", poster: "/posters/comedy.svg" },
-  { title: "ufo 판타지", genre: "판타지", director: "감독 H", actors: "배우15, 배우16", runngingtime:"3시간", summary: "마법과 모험", poster: "/posters/fantasy.svg" },
+  {
+    title: "애프터 선셋",
+    genre: "로맨스",
+    director: "감독 A",
+    actors: "배우1, 배우2",
+    runngingtime: "1시간",
+    summary: "사랑 이야기",
+    poster: "/posters/romance.svg",
+  },
+  {
+    title: "우는 남자",
+    genre: "뮤지컬",
+    director: "감독 B",
+    actors: "배우3, 배우4",
+    runngingtime: "2시간",
+    summary: "음악과 춤 이야기",
+    poster: "/posters/musical.svg",
+  },
+  {
+    title: "무서워",
+    genre: "스릴러",
+    director: "감독 C",
+    actors: "배우5, 배우6",
+    runngingtime: "2시간",
+    summary: "긴장감 넘치는 이야기",
+    poster: "/posters/thriller.svg",
+  },
+  {
+    title: "장화 안 신은 고양이",
+    genre: "애니메이션",
+    director: "감독 D",
+    actors: "배우7, 배우8",
+    runngingtime: "1시간",
+    summary: "애니메이션 모험",
+    poster: "/posters/animation.svg",
+  },
+  {
+    title: "액션히어로",
+    genre: "액션",
+    director: "감독 E",
+    actors: "배우9, 배우10",
+    runngingtime: "3시간",
+    summary: "스릴 넘치는 액션",
+    poster: "/posters/action.svg",
+  },
+  {
+    title: "태정태세문단세",
+    genre: "역사",
+    director: "감독 F",
+    actors: "배우11, 배우12",
+    runngingtime: "3시간",
+    summary: "역사적 사실 기반",
+    poster: "/posters/history.svg",
+  },
+  {
+    title: "아마..존",
+    genre: "코미디",
+    director: "감독 G",
+    actors: "배우13, 배우14",
+    runngingtime: "2시간",
+    summary: "유쾌한 이야기",
+    poster: "/posters/comedy.svg",
+  },
+  {
+    title: "ufo 판타지",
+    genre: "판타지",
+    director: "감독 H",
+    actors: "배우15, 배우16",
+    runngingtime: "3시간",
+    summary: "마법과 모험",
+    poster: "/posters/fantasy.svg",
+  },
 ];
-
-
 
 export default function Vote() {
   const router = useRouter();
 
-  {/* 모바일에서 포스터 클릭하면 설명 보이게 */}
+  {
+    /* 모바일에서 포스터 클릭하면 설명 보이게 */
+  }
   const [activeMovie, setActiveMovie] = useState<string | null>(null);
 
   const toggleDescription = (title: string) => {
     setActiveMovie(activeMovie === title ? null : title);
   };
 
-
   const handleVote = async (title: string) => {
-  console.log("📌 전송할 option 값:", title);
+    console.log("📌 전송할 option 값:", title);
 
-  if (!title || typeof title !== "string") {
-    console.error("❌ 잘못된 option 값:", title);
-    return;
-  }
-
-  const confirmed = confirm(`'${title}'를 예약하시겠습니까?`);
-  if (!confirmed) return;
-
-  const requestData = JSON.stringify({ option: title });
-  console.log("📤 서버로 전송할 데이터:", requestData);
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/vote`, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: requestData,
-    });
-
-    console.log("📩 응답 상태 코드:", response.status);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("❌ 서버 응답 오류:", errorText);
-      throw new Error(`서버 오류: ${response.status}, 응답: ${errorText}`);
+    if (!title || typeof title !== "string") {
+      console.error("❌ 잘못된 option 값:", title);
+      return;
     }
 
-    router.push("/vote-complete");
-  } catch (error) {
-    console.error("투표 요청 실패:", error);
-  }
-};
+    const confirmed = confirm(`'${title}'를 예약하시겠습니까?`);
+    if (!confirmed) return;
 
-return (
+    const requestData = JSON.stringify({ option: title });
+    console.log("📤 서버로 전송할 데이터:", requestData);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/vote`, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: requestData,
+      });
+
+      console.log("📩 응답 상태 코드:", response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("❌ 서버 응답 오류:", errorText);
+        throw new Error(`서버 오류: ${response.status}, 응답: ${errorText}`);
+      }
+
+      router.push("/vote-complete");
+    } catch (error) {
+      console.error("투표 요청 실패:", error);
+    }
+  };
+
+  return (
     <div css={containerStyle}>
       <h1 css={titleStyle}>영화 예약</h1>
       <p>포스터를 클릭하면 상세 내용이 보여요!</p>
       <div css={gridContainerStyle}>
         {movies.map((movie) => (
           <div key={movie.title} css={movieCardStyle}>
-            <div 
-              css={posterContainerStyle} 
+            <div
+              css={posterContainerStyle}
               onClick={() => toggleDescription(movie.title)}
             >
-            <div 
-              css={[descriptionStyle, activeMovie === movie.title && { opacity: 1, pointerEvents: "auto" }]} 
-              className="description"
-            >
-                <p><strong>{movie.title}</strong></p>
+              <div
+                css={[
+                  descriptionStyle,
+                  activeMovie === movie.title && {
+                    opacity: 1,
+                    pointerEvents: "auto",
+                  },
+                ]}
+                className="description"
+              >
+                <p>
+                  <strong>{movie.title}</strong>
+                </p>
                 <p>장르: {movie.genre}</p>
                 <p>감독: {movie.director}</p>
                 <p>출연: {movie.actors}</p>
