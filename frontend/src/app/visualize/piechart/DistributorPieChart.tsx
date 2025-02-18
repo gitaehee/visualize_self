@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ResponsivePie } from "@nivo/pie";
+import { API_BASE_URL } from "@/const/baseApi";
 
 const DistributorPieChart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/api/distributor-counts")
+      .get(`${API_BASE_URL}/distributor-counts`)
       .then((response) => {
         console.log("🎬 API 응답 데이터:", response.data);
 
@@ -39,7 +40,11 @@ const DistributorPieChart = () => {
       }}
     >
       <ResponsivePie
-        data={data.length > 0 ? data : [{ id: "데이터 없음", label: "데이터 없음", value: 1 }]}
+        data={
+          data.length > 0
+            ? data
+            : [{ id: "데이터 없음", label: "데이터 없음", value: 1 }]
+        }
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={2}

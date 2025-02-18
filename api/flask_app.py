@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, Response, json
 from flask_cors import CORS
 import pandas as pd
 import math
+import os
 
 app = Flask(__name__)
 
@@ -17,8 +18,21 @@ CORS(app, resources={r"/*": {"origins": [
 # 1. 영화 데이터 관련 API
 # ===============================
 
+# 현재 파일이 있는 디렉토리를 기준으로 CSV 경로 설정
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(BASE_DIR, "public", "top200_movies_with_posters.csv")
+
+def load_data():
+    """CSV 파일을 읽어 데이터프레임으로 반환"""
+    if not os.path.exists(CSV_PATH):
+        raise FileNotFoundError(f"CSV 파일을 찾을 수 없습니다: {CSV_PATH}")
+    
+    df = pd.read_csv(CSV_PATH)
+    return df
+
+df = load_data()
 # CSV 파일 로드 및 컬럼명 정리
-df = pd.read_csv("top200_movies_with_posters.csv")
+# df = pd.read_csv("top200_movies_with_posters.csv")
 df.columns = df.columns.str.strip()
 
 # 각 영화에 고유 ID 추가

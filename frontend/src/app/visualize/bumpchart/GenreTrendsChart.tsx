@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ResponsiveAreaBump } from "@nivo/bump";
+import { API_BASE_URL } from "@/const/baseApi";
 
 const GenreTrendsAreaBump = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/api/genre-trends") // Flask API 호출
+      .get(`${API_BASE_URL}/genre-trends`) // Flask API 호출
       .then((response) => {
         console.log("🎬 API 응답 데이터:", response.data);
 
@@ -17,7 +18,7 @@ const GenreTrendsAreaBump = () => {
           data: genreItem.data.sort((a, b) => parseInt(a.x) - parseInt(b.x)), // ✅ 연도 순으로 정렬
         }));
 
-        console.log(transformedData)
+        console.log(transformedData);
         setData(transformedData);
       })
       .catch((error) => {
@@ -26,12 +27,30 @@ const GenreTrendsAreaBump = () => {
   }, []);
 
   return (
-    <div style={{ height: "500px", width: "800px", background: "#111", padding: "20px", borderRadius: "10px" }}>
+    <div
+      style={{
+        height: "500px",
+        width: "800px",
+        background: "#111",
+        padding: "20px",
+        borderRadius: "10px",
+      }}
+    >
       <ResponsiveAreaBump
         data={data}
         margin={{ top: 40, right: 100, bottom: 80, left: 100 }}
         spacing={8}
-        colors={["#FF6B6B", "#FF9F43", "#FFD166", "#06D6A0", "#118AB2", "#073B4C", "#EF476F", "#8338EC", "#3A86FF"]} // 🎨 색상 조정
+        colors={[
+          "#FF6B6B",
+          "#FF9F43",
+          "#FFD166",
+          "#06D6A0",
+          "#118AB2",
+          "#073B4C",
+          "#EF476F",
+          "#8338EC",
+          "#3A86FF",
+        ]} // 🎨 색상 조정
         blendMode="normal" // ✅ 대비를 높이기 위해 blendMode를 normal로 변경
         borderWidth={2} // ✅ 선 두께 조정
         enableGridX={false} // ✅ 연도별 백그라운드 선 제거

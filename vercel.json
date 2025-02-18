@@ -1,6 +1,6 @@
 {
-    "version": 2,
-    "builds": [
+  "version": 2,
+  "builds": [
     {
       "src": "api/flask_app.py",
       "use": "@vercel/python"
@@ -10,21 +10,24 @@
       "use": "@vercel/next"
     }
   ],
-    "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "api/flask_app.py"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "frontend/$1"
-      }
-    ],
-    "installCommand": "npm install",  
-    "buildCommand": "npm run build",  
-    "ignoreCommand": "git diff --quiet HEAD^ HEAD -- frontend/ api/",
-    "env": {
-        "NEXT_ESLINT_IGNORE_DURING_BUILDS": "true"  
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/flask_app.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend/$1"
+    },
+    {
+      "src": "/data/(.*)",
+      "dest": "api/data/$1"
     }
+  ],
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- frontend/ api/",
+  "env": {
+    "NEXT_ESLINT_IGNORE_DURING_BUILDS": "true"
   }
-  
+}
