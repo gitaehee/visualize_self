@@ -39,8 +39,8 @@ export default function VoteCompletePage() {
   return (
     <div css={containerStyle}>
       <h1 css={messageStyle}>투표가 끝났습니다!</h1>
-      <button css={buttonStyle} onClick={() => router.push("/")}>
-        홈으로 돌아가기
+      <button css={buttonStyle} onClick={() => router.push("/results")}>
+        실시간 투표 결과 확인하기
       </button>
     </div>
   );
