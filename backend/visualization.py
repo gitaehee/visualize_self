@@ -1,18 +1,13 @@
 import streamlit as st
 import requests
-import matplotlib.pyplot as plt
+import plotly.express as px
+import pandas as pd
 
-# y축 한글 깨짐 해결
-plt.rcParams['font.family'] ='AppleGothic'
-plt.rcParams['axes.unicode_minus'] =False
-
-
-# ✅ API에서 투표 데이터 가져오기
+# API에서 투표 데이터 가져오기
 API_URL = "http://localhost:5000/results"  # Flask 백엔드 API 주소
 
 st.title("🎬 영화 투표 결과")
 st.write("실시간 투표 결과를 확인하세요!")
-
 
 # 영화 제목을 장르로 변환하는 매핑
 genre_mapping = {
@@ -51,32 +46,46 @@ try:
         st.error("데이터가 없습니다. 투표를 진행해주세요!")
     
     else:
-        # ✅ 투표 수가 많은 순으로 정렬
-        sorted_votes = sorted(votes.items(), key=lambda x: x[1], reverse=False)
-        
+        # ✅ 총 투표 수 계산
+        total_votes = sum(votes.values())
+        # ✅ 페이지 상단에 현재 투표 수 표시
+        st.subheader(f"🍿 현재 투표 수 : {total_votes}표")
+
         # ✅ 1. 영화 제목별 투표 수 출력 (텍스트)
         st.subheader("📊 영화별 투표 수")
 
         sorted_votes = sorted(votes.items(), key=lambda x: x[1], reverse=True)
-
         for title, count in sorted_votes:
-            st.write(f"🎥 {title} : {count}표")  # 제목 : 몇 표 형식으로 출력
+            st.write(f"🎥 {title} : {count}표 {'🍿 ' * count}")  # 제목 : 몇 표 형식으로 출력
         
-        # ✅ 2. 장르별 투표 수 그래프 출력
+        # ✅ 2. 장르별 투표 수 그래프 출력 (Plotly)
         st.subheader("🎭 장르별 투표 결과 (그래프)")
 
-        genres = [genre_mapping.get(item[0], item[0]) for item in sorted_votes]
-        vote_counts = [item[1] for item in sorted_votes]
+        # 영화 제목을 장르로 변환하여 카운트
+        genre_counts = {}
+        for title, count in votes.items():
+            genre = genre_mapping.get(title, title)  # 영화 제목을 장르로 변환 (기본값은 원래 제목)
+            genre_counts[genre] = genre_counts.get(genre, 0) + count
 
-        # ✅ 그래프 그리기
-        fig, ax = plt.subplots()
-        ax.barh(genres, vote_counts, color="skyblue")
-        ax.set_xlabel("투표 수")
-        ax.set_ylabel("영화 장르")
-        ax.set_title("실시간 투표 결과")
+        # 장르별 투표 수 정렬
+        sorted_genre_votes = sorted(genre_counts.items(), key=lambda x: x[1], reverse=False)
+        genres = [item[0] for item in sorted_genre_votes]
+        vote_counts = [item[1] for item in sorted_genre_votes]
 
-        st.pyplot(fig)
+        # Plotly를 이용한 수평 막대 그래프 생성
+        df = pd.DataFrame({"영화 장르": genres, "투표 수": vote_counts})
+        fig = px.bar(
+            df,
+            x="투표 수",
+            y="영화 장르",
+            orientation="h",
+            title="실시간 투표 결과",
+            labels={"투표 수": "투표 수", "영화 장르": "영화 장르"}
+        )
+        # x축 눈금을 자연수 단위로 설정
+        fig.update_xaxes(dtick=1)
+        
+        st.plotly_chart(fig)
 
 except Exception as e:
     st.error(f"데이터를 불러오는 데 실패했습니다: {e}")
-
