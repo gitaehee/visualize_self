@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5001";
-
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
 const containerStyle = css`
   display: flex;
@@ -35,16 +35,13 @@ const voteItemStyle = css`
   font-size: 1.125rem;
 `;
 
-
-
-
 export default function Results() {
   const [votes, setVotes] = useState<{ [key: string]: number }>({}); // ✅ 동적으로 옵션 수용 가능
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/results`);
+        const response = await fetch(`${API_BASE_URL}/api/results`);
         const data = await response.json();
 
         // 객체 형태를 차트용 배열로 변환
@@ -77,7 +74,13 @@ export default function Results() {
       {/* ✅ Streamlit 결과를 불러와서 시각화 */}
       <iframe
         src="http://localhost:8501/?graph=bar"
-        style={{ width: "100%", maxWidth: "100vw", height: "100vh", overflow:"hidden", border: "none" }} // ✅ 인라인 스타일 사용, 가로 꽉 채우기
+        style={{
+          width: "100%",
+          maxWidth: "100vw",
+          height: "100vh",
+          overflow: "hidden",
+          border: "none",
+        }} // ✅ 인라인 스타일 사용, 가로 꽉 채우기
         title="Streamlit Visualization"
       />
     </div>

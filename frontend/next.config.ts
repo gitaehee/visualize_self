@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const nextConfig: NextConfig = {
   eslint: {
@@ -23,6 +24,22 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "image.tmdb.org",
+        pathname: "/t/p/**",
+      },
+    ],
+  },
+  webpack: (config, { isServer }) => {
+    // 클라이언트 사이드 빌드에서 mini-css-extract-plugin 추가
+    if (!isServer) {
+      config.plugins.push(new MiniCssExtractPlugin());
+    }
+    return config;
   },
 };
 
