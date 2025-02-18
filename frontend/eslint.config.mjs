@@ -9,8 +9,13 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
+export default [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",  // ✅ 사용하지 않는 변수 경고 끄기
+      "react/jsx-uses-react": "off",  // ✅ React 18 이상에서 필요 없는 규칙 끄기
+      "react/react-in-jsx-scope": "off"  // ✅ Next.js에서는 필요 없음
+    }
+  }
 ];
-
-export default eslintConfig;
