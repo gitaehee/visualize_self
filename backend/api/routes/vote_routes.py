@@ -1,5 +1,7 @@
 # backend/api/routes/vote_routes.py
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
+from flask_cors import cross_origin
+import json
 
 vote_bp = Blueprint('vote', __name__, url_prefix='/api')
 
@@ -14,8 +16,12 @@ votes = {
     "장화 안 신은 고양이": 0
 }
 
-@vote_bp.route("/vote", methods=["POST"])
+@vote_bp.route("/vote", methods=["POST", "OPTIONS"])
+@cross_origin(supports_credentials=True)  # ✅ CORS 정책 추가
 def vote():
+    if request.method == "OPTIONS":
+        return jsonify({"message": "Preflight OK"}), 200  # ✅ OPTIONS 요청 허용
+
     data = request.json
     option = data.get("option")
     if option not in votes:
@@ -25,4 +31,6 @@ def vote():
 
 @vote_bp.route("/results", methods=["GET"])
 def get_results():
-    return jsonify(votes)
+    """한글이 깨지지 않도록 JSON 반환"""
+    response_data = json.dumps(votes, ensure_ascii=False, indent=2)  # ✅ 한글 유지
+    return Response(response_data, content_type="application/json; charset=utf-8")
