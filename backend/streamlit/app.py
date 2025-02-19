@@ -6,7 +6,16 @@ import pandas as pd
 import os
 
 # Flask 백엔드 API 주소 (투표 결과 API)
-API_URL = os.getenv("API_URL", "http://localhost:5000/results")
+# 환경에 따라 적절한 Config 클래스 선택
+ENV = os.getenv("FLASK_ENV", "development")  # 기본값: development
+
+if ENV == "production":
+    config = ProductionConfig()
+else:
+    config = DevelopmentConfig()
+
+# API URL을 설정할 때 Config에서 값을 가져오도록 변경
+API_URL = f"{config.API_BASE_URL}/results"
 
 st.title("🎬 영화 투표 결과")
 st.write("실시간 투표 결과를 확인하세요!")
