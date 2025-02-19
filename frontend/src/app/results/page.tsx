@@ -74,6 +74,7 @@ export default function Results() {
       {/* ✅ Streamlit 결과를 불러와서 시각화 */}
       <iframe
         src="http://localhost:8501/?graph=bar"
+        //src="https://movie-visualize.streamlit.app/"
         style={{
           width: "100%",
           maxWidth: "100vw",
