@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { css } from "@emotion/react";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000" || "http://127.0.0.1:5000";
 
 const containerStyle = css`
   display: flex;
@@ -210,6 +210,7 @@ export default function Vote() {
       const response = await fetch(`${API_BASE_URL}/api/vote`, {
         method: "POST",
         mode: "cors",
+        credentials: "include",  // ✅ CORS 문제 해결
         headers: {
           "Content-Type": "application/json",
         },
