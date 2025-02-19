@@ -6,7 +6,7 @@ import pandas as pd
 import os
 
 # Flask 백엔드 API 주소 (투표 결과 API)
-API_URL = os.getenv("API_URL", "http://localhost:5000/api/results")
+API_URL = os.getenv("API_URL", "https://datavisualization-teal-one.vercel.app/api/results")
 
 st.title("🎬 영화 투표 결과")
 st.write("실시간 투표 결과를 확인하세요!")

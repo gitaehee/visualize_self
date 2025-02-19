@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { css } from "@emotion/react";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000" || "http://127.0.0.1:5000";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://datavisualization-teal-one.vercel.app/api/results";
 
 const containerStyle = css`
   display: flex;

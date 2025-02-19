@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000" || "http://127.0.0.1:5000";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://datavisualization-teal-one.vercel.app/api/results";
 
 const containerStyle = css`
   display: flex;
@@ -73,8 +73,8 @@ export default function Results() {
 
       {/* ✅ Streamlit 결과를 불러와서 시각화 */}
       <iframe
-        src="http://localhost:8501/?graph=bar"
-        //src="https://movie-visualize.streamlit.app/"
+        //src="http://localhost:8501/?graph=bar"
+        src="https://movie-visualize1.streamlit.app/"
         style={{
           width: "100%",
           maxWidth: "100vw",
