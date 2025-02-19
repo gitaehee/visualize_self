@@ -39,7 +39,7 @@ export default function Results() {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/results`);
+        const response = await fetch(`${API_BASE_URL}/results`);
         const data = await response.json();
 
         // 객체 형태를 차트용 배열로 변환

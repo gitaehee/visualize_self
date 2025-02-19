@@ -205,7 +205,7 @@ export default function Vote() {
     console.log("📤 서버로 전송할 데이터:", requestData);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/vote`, {
+      const response = await fetch(`${API_BASE_URL}/vote`, {
         method: "POST",
         mode: "cors",
         headers: {
