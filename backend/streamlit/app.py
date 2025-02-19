@@ -1,9 +1,14 @@
 # backend/streamlit/app.py
 import streamlit as st
 import requests
+
+import subprocess
+subprocess.run(["pip", "install", "plotly"], check=True)
+
 import plotly.express as px
 import pandas as pd
 import os
+
 
 # Flask 백엔드 API 주소 (투표 결과 API)
 API_URL = os.getenv("API_URL", "https://datavisualization-teal-one.vercel.app/api/results")
