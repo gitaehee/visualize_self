@@ -1,10 +1,6 @@
 # backend/streamlit/app.py
 import streamlit as st
 import requests
-
-import subprocess
-subprocess.run(["pip", "install", "plotly"], check=True)
-
 import plotly.express as px
 import pandas as pd
 import os
