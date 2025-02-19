@@ -4,6 +4,7 @@ import requests
 import plotly.express as px
 import pandas as pd
 import os
+from backend.api.config import ProductionConfig, DevelopmentConfig  # 🔥 config.py에서 불러오기
 
 # Flask 백엔드 API 주소 (투표 결과 API)
 # 환경에 따라 적절한 Config 클래스 선택
