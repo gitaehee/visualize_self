@@ -1,3 +1,2 @@
-export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_API || "http://localhost:3000";
+export const API_BASE_URL = "http://ksciptime.iptime.org:5000/api";
 console.log("Base API URL:", API_BASE_URL);
