@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000" || "http://127.0.0.1:5000";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://datavisualization-teal-one.vercel.app" || "http://localhost:5000" || "http://127.0.0.1:5000";
 
 const containerStyle = css`
   display: flex;
@@ -36,6 +36,7 @@ const voteItemStyle = css`
 `;
 
 export default function Results() {
+  
   const [votes, setVotes] = useState<{ [key: string]: number }>({}); // ✅ 동적으로 옵션 수용 가능
 
   useEffect(() => {
@@ -73,7 +74,9 @@ export default function Results() {
 
       {/* ✅ Streamlit 결과를 불러와서 시각화 */}
       <iframe
-        src="http://localhost:8501/?graph=bar"
+        //src="http://localhost:8501/?graph=bar"
+        src="https://fwjjbrebcdap7mmqxymwci.streamlit.app/"
+        
         style={{
           width: "100%",
           maxWidth: "100vw",
