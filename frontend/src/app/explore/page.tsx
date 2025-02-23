@@ -4059,9 +4059,11 @@ export default function Explore() {
                     pointerEvents: "none",
                     whiteSpace: "nowrap",
                 }}>
-                    <p><strong>{data.영화명 || "알 수 없음"}</strong></p>
+                    <p><strong>{data.영화명}</strong></p>
                     <p>{xAxis} : {xValue}</p>
                     <p>{yAxis} : {yValue}</p>
+                    <p style={{ color: "gainsboro" }}>장르 : {data.장르}</p>
+                    <p style={{ color: "gainsboro" }}>개봉일 : {data.개봉일}</p>
                 </div>
             );
         }   
@@ -4073,7 +4075,11 @@ export default function Explore() {
     // ✅ X축 선택 시 Y축 옵션에서 자동 제외
     const availableYOptions = useMemo(() => numericColumns.filter((col) => col !== xAxis), [xAxis]);
 
-    
+    const chartColors: Record<string, string> = { // 그래프 종류 버튼 색
+        Bar: "lightblue",
+        Line: "lightpink",
+        Scatter: "lightgreen",
+      };
   
     // ✅ X축, Y축 변경 시 데이터 변환 + 정렬
     useEffect(() => {
@@ -4098,6 +4104,8 @@ export default function Explore() {
   
         return {
           영화명: d.영화명, // ✅ 영화명 추가
+          장르: d.장르,    // ✅ 장르 추가
+          개봉일: d.개봉일, // ✅ 개봉일 추가
           x: parseFloat(String(xValue).replace(/,/g, "")) || 0,
           y: parseFloat(String(yValue).replace(/,/g, "")) || 0,
         };
@@ -4188,7 +4196,15 @@ export default function Explore() {
           {["Bar", "Line", "Scatter"]
             .filter((type) => type !== "Scatter" || isScatterChartAvailable) // ✅ X축이 숫자일 때만 Scatter 버튼 유지
             .map((type) => (
-            <button key={type} onClick={() => setChartType(type)}>
+            <button key={type} onClick={() => setChartType(type)}
+                style={{
+                backgroundColor: chartColors[type], // ✅ 버튼 색상 적용
+                padding: "10px 15px",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+                }}
+            >
                 {type} Chart
             </button>
             ))}
