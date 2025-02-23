@@ -232,7 +232,7 @@ export default function Timeline() {
               <div css={styles.yearCircle}></div>
               <motion.span css={styles.year}>
                 {year}
-                {year === 2010 || year === 2020 ? "년대" : ""}
+                {year === 2010 ? "년대" : year === 2020 ? "년 이후" : ""}
               </motion.span>
               <motion.h3 css={styles.year}>{title}</motion.h3>
               <motion.p css={styles.content}>{description}</motion.p>
