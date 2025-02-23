@@ -1,22 +1,15 @@
 # backend/streamlit/app.py
 import streamlit as st
 import requests
+
 import plotly.express as px
 import pandas as pd
 import os
 from backend.api.config import ProductionConfig, DevelopmentConfig  # 🔥 config.py에서 불러오기
 
+
 # Flask 백엔드 API 주소 (투표 결과 API)
-# 환경에 따라 적절한 Config 클래스 선택
-ENV = os.getenv("FLASK_ENV", "development")  # 기본값: development
-
-if ENV == "production":
-    config = ProductionConfig()
-else:
-    config = DevelopmentConfig()
-
-# API URL을 설정할 때 Config에서 값을 가져오도록 변경
-API_URL = f"{config.API_BASE_URL}/results"
+API_URL = os.getenv("API_URL", "http://ksciptime.iptime.org:5000/api/results") # 여기 나중에 바꿔야함
 
 st.title("🎬 영화 투표 결과")
 st.write("실시간 투표 결과를 확인하세요!")

@@ -6,9 +6,6 @@ import { css } from "@emotion/react";
 import { API_BASE_URL } from "@/const/baseApi";
 import axios from "axios";
 
-// const API_BASE_URL =
-//   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
-
 const containerStyle = css`
   display: flex;
   flex-direction: column;

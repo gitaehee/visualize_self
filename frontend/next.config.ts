@@ -21,6 +21,30 @@ const nextConfig: NextConfig = {
             key: "X-Frame-Options",
             value: "ALLOW-FROM http://localhost:8501",
           },
+          {
+            key: "Access-Control-Allow-Headers",
+            value: "*",
+          },
+          {
+            key: "Access-Control-Allow-Methods",
+            value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+          },
+          {
+            key: "Access-Control-Allow-Origin",
+            value: "*",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+          {
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
         ],
       },
     ];
