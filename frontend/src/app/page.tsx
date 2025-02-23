@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { css } from "@emotion/react";
 import Image from "next/image";
+import useRandomStyle from "./useRandomStyle";
 
 const timelineData = [
   {
@@ -197,7 +198,7 @@ export default function Home() {
                     height={400}
                     priority
                     className="photo"
-                    css={generateRandomStyle(index % 2 === 0)}
+                    css={useRandomStyle(index % 2 === 0)}
                   />
                 </div>
               ))}
