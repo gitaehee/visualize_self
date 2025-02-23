@@ -71,7 +71,7 @@ const timelineData = [
     imageCount: 2,
   },
   {
-    year: "2010년대",
+    year: 2010,
     title: "한국 영화 성장기",
     description: (
       <>
@@ -95,7 +95,7 @@ const timelineData = [
     imageCount: 2,
   },
   {
-    year: "2020년 이후",
+    year: 2020,
     title: "글로벌 영향력 확대",
     description: (
       <>
@@ -230,7 +230,10 @@ export default function Timeline() {
           {timelineData.map(({ year, title, description, images }) => (
             <motion.div key={year} css={styles.yearBlock}>
               <div css={styles.yearCircle}></div>
-              <motion.span css={styles.year}>{year}</motion.span>
+              <motion.span css={styles.year}>
+                {year}
+                {year === 2010 || year === 2020 ? "년대" : ""}
+              </motion.span>
               <motion.h3 css={styles.year}>{title}</motion.h3>
               <motion.p css={styles.content}>{description}</motion.p>
               <motion.div css={styles.photoWrapper}>
