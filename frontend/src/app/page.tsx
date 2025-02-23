@@ -9,7 +9,7 @@ import { motion, useScroll } from "framer-motion";
 const getImagePaths = (year: number | string, count: number) => {
   return Array.from(
     { length: count },
-    (_, i) => `/homeimages/${year}_${i + 1}.svg`
+    (_, i) => `/homeimages/${year}_${i + 1}.png`
   );
 };
 
