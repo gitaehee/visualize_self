@@ -4159,7 +4159,7 @@ export default function Explore() {
           <h4>X축, Y축을 선택하여 그래프를 확인하세요</h4>
       
           {/* ✅ X축, Y축 선택 UI */}
-          <div>
+          <div style={{ display: "flex", gap: "20px", alignItems: "center", marginBottom: "15px" }}>
             <label>
               X축 선택:{" "}
               <select value={xAxis} onChange={(e) => setXAxis(e.target.value)}>
@@ -4184,8 +4184,8 @@ export default function Explore() {
           </div>
       
           {/* ✅ 그래프 선택 버튼 */}
-        <div>
-        {["Bar", "Line", "Scatter"]
+        <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+          {["Bar", "Line", "Scatter"]
             .filter((type) => type !== "Scatter" || isScatterChartAvailable) // ✅ X축이 숫자일 때만 Scatter 버튼 유지
             .map((type) => (
             <button key={type} onClick={() => setChartType(type)}>
