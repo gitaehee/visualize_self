@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { css } from "@emotion/react";
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000" || "http://127.0.0.1:5000";
+import { API_BASE_URL } from "@/const/baseApi";
+import axios from "axios";
 
 const containerStyle = css`
   display: flex;
@@ -41,18 +40,22 @@ export default function Results() {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/results`);
-        const data = await response.json();
+        const response = await axios.get(`${API_BASE_URL}/results`);
 
         // 객체 형태를 차트용 배열로 변환
-        const formattedData = Object.entries(data).map(([key, value]) => ({
-          name: key,
-          votes: value as number,
-        }));
+        const formattedData = Object.entries(response.data).map(
+          ([key, value]) => ({
+            name: key,
+            votes: value as number,
+          })
+        );
 
-        setVotes(data); // ✅ 8개 옵션을 백엔드에서 받아 자동 반영
-      } catch (error) {
-        console.error("Failed to fetch results:", error);
+        setVotes(response.data); // ✅ 8개 옵션을 백엔드에서 받아 자동 반영
+      } catch (error: any) {
+        console.error(
+          "❌ 결과 조회 실패:",
+          error.response?.data || error.message
+        );
       }
     };
 
@@ -73,8 +76,8 @@ export default function Results() {
 
       {/* ✅ Streamlit 결과를 불러와서 시각화 */}
       <iframe
-        src="http://localhost:8501/?graph=bar"
-        //src="https://movie-visualize.streamlit.app/"
+        //src="http://localhost:8501/?graph=bar"
+        src="https://fwjjbrebcdap7mmqxymwci.streamlit.app/"
         style={{
           width: "100%",
           maxWidth: "100vw",

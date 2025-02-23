@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { css } from "@emotion/react";
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000" || "http://127.0.0.1:5000";
+import { API_BASE_URL } from "@/const/baseApi";
+import axios from "axios";
 
 const containerStyle = css`
   display: flex;
@@ -182,10 +181,6 @@ const movies = [
 
 export default function Vote() {
   const router = useRouter();
-
-  {
-    /* 모바일에서 포스터 클릭하면 설명 보이게 */
-  }
   const [activeMovie, setActiveMovie] = useState<string | null>(null);
 
   const toggleDescription = (title: string) => {
@@ -203,31 +198,23 @@ export default function Vote() {
     const confirmed = confirm(`'${title}'를 예약하시겠습니까?`);
     if (!confirmed) return;
 
-    const requestData = JSON.stringify({ option: title });
-    console.log("📤 서버로 전송할 데이터:", requestData);
-
     try {
-      const response = await fetch(`${API_BASE_URL}/api/vote`, {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",  // ✅ CORS 문제 해결
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: requestData,
+      const response = await axios.post(`${API_BASE_URL}/vote`, {
+        option: title,
       });
 
       console.log("📩 응답 상태 코드:", response.status);
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("❌ 서버 응답 오류:", errorText);
-        throw new Error(`서버 오류: ${response.status}, 응답: ${errorText}`);
+      if (response.status === 200) {
+        router.push("/vote-complete");
+      } else {
+        console.error("❌ 서버 응답 오류:", response.statusText);
       }
-
-      router.push("/vote-complete");
-    } catch (error) {
-      console.error("투표 요청 실패:", error);
+    } catch (error: any) {
+      console.error(
+        "❌ 투표 요청 실패:",
+        error.response?.data || error.message
+      );
     }
   };
 
