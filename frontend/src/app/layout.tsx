@@ -60,6 +60,7 @@ export default function RootLayout({
             <Image src="/logo.svg" alt="홈 로고" width={20} height={20} css={logoStyle} />
           </Link>
           <Link href="/visualize" css={linkStyle}>시각화</Link>
+          <Link href="/explore" css={linkStyle}>데이터탐색</Link>
           <Link href="/awards" css={linkStyle}>어워즈</Link>
           <Link href="/vote" css={linkStyle}>투표</Link>
           <Link href="/results" css={linkStyle}>투표결과</Link>
