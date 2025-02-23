@@ -4123,7 +4123,7 @@ export default function Explore() {
                     {chartType === "Bar" ? (
                     <BarChart data={formattedData}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="x" />
+                        <XAxis dataKey="x" tickFormatter={(tick) => tick.toLocaleString()} />
                         <YAxis width={150} domain={["auto", "auto"]} tickFormatter={(tick) => tick.toLocaleString()} />
                         <Tooltip content={<CustomTooltip chartType="Bar" />} />
                         <Bar dataKey="y" fill="#8884d8" />
@@ -4131,7 +4131,7 @@ export default function Explore() {
                     ) : chartType === "Line" ? (
                     <LineChart data={formattedData}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="x" />
+                        <XAxis dataKey="x" tickFormatter={(tick) => tick.toLocaleString()} />
                         <YAxis width={150} domain={["auto", "auto"]} tickFormatter={(tick) => tick.toLocaleString()} />
                         <Tooltip content={<CustomTooltip chartType="Line" />} />
                         <Line type="monotone" dataKey="y" stroke="#8884d8" />
@@ -4143,7 +4143,7 @@ export default function Explore() {
                         type="number"
                         dataKey="x"
                         domain={["auto", "auto"]}
-                        tickFormatter={(tick) => tick.toLocaleString()}
+                        tickFormatter={(tick) => tick.toLocaleString()} //1000단위로 쉼표 표시 가능
                         />
                         <YAxis
                         dataKey="y"
