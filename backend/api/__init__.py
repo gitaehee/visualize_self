@@ -9,7 +9,7 @@ def create_app():
     app.config.from_object(DevelopmentConfig)
 
     # CORS 설정을 정확하게 추가
-    CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+    CORS(app, resources={r"/*": {"origins": "*"}})
 
     # 라우트 등록
     register_routes(app)
