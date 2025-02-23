@@ -5,10 +5,11 @@ import requests
 import plotly.express as px
 import pandas as pd
 import os
+from backend.api.config import ProductionConfig, DevelopmentConfig  # 🔥 config.py에서 불러오기
 
 
 # Flask 백엔드 API 주소 (투표 결과 API)
-API_URL = os.getenv("API_URL", "http://127.0.0.1:5000/api/results") # 여기 나중에 바꿔야함
+API_URL = os.getenv("API_URL", "http://ksciptime.iptime.org:5000/api/results") # 여기 나중에 바꿔야함
 
 st.title("🎬 영화 투표 결과")
 st.write("실시간 투표 결과를 확인하세요!")

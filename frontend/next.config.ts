@@ -56,6 +56,21 @@ const nextConfig: NextConfig = {
         hostname: "image.tmdb.org",
         pathname: "/t/p/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
+        pathname: "/photos/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.pixabay.com",
+        pathname: "/photo/**",
+      },
+      {
+        protocol: "https",
+        hostname: "source.unsplash.com",
+        pathname: "/**",
+      },
     ],
   },
   webpack: (config, { isServer }) => {
