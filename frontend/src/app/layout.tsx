@@ -17,6 +17,8 @@ const globalStyles = css`
 const navbarStyle = css`
   background: white;
   padding: 20px;
+  width: 100vw;
+  height: 25px;
 `;
 
 const linkStyle = css`

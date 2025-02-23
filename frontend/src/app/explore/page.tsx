@@ -4027,18 +4027,29 @@ export default function Explore() {
     // ✅ 툴팁 커스텀 컴포넌트 추가
     const CustomTooltip = ({ active, payload }: any) => {
         if (active && payload && payload.length) {
-        const data = payload[0].payload;
+            // ✅ 올바른 데이터 찾기 (payload 배열을 사용하여 가장 가까운 점을 선택)
+            const data = payload[0].payload; // ✅ 첫 번째 데이터 객체 가져오기
 
-        return (
-            <div style={{ padding: "10px", border: "none", fontSize: "14px", backgroundColor: "plum", borderRadius: "8px"}}>
-            <p><strong>{data.영화명}</strong></p>
-            <p>{xAxis} : {data.x.toLocaleString()}</p>
-            <p>{yAxis} : {data.y.toLocaleString()}</p>
-            </div>
-        );
-        }
+            if (!data) return null;
+
+            const xValue = isNaN(Number(data.x)) ? data.x : Number(data.x).toLocaleString();
+            const yValue = isNaN(Number(data.y)) ? data.y : Number(data.y).toLocaleString();
+
+            return (
+                <div style={{
+                    padding: "10px",
+                    fontSize: "14px",
+                    backgroundColor: "plum",
+                    borderRadius: "8px",
+                }}>
+                    <p><strong>{data.영화명 || "알 수 없음"}</strong></p>
+                    <p>{xAxis} : {xValue}</p>
+                    <p>{yAxis} : {yValue}</p>
+                </div>
+            );
+        }   
         return null;
-    };
+};
   
     const isScatterChartAvailable = formattedData.length > 0 && !isNaN(Number(formattedData[0]?.x));
 
@@ -4048,6 +4059,12 @@ export default function Explore() {
     // ✅ X축, Y축 변경 시 데이터 변환 + 정렬
     useEffect(() => {
       if (!xAxis || !yAxis) return;
+
+      if (xAxis === yAxis) {
+        // ✅ X축과 다른 첫 번째 값을 찾아서 Y축으로 설정
+        const newYAxis = numericColumns.find((col) => col !== xAxis) || numericColumns[0];
+        setYAxis(newYAxis);
+      }
   
       const newData = moviesData.map((d) => {
         const xKey = xAxis as keyof typeof d;
