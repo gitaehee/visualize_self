@@ -12,6 +12,7 @@ const containerStyle = css`
   align-items: center;
   margin-top: 50px;
   min-height: 110vh;
+  padding-bottom: 140px;
 `;
 
 const titleStyle = css`
