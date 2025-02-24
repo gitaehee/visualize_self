@@ -159,8 +159,8 @@ export default function Results() {
           <div css={votesContainerStyle}>
             <h3>🎭 장르별 투표 결과 (그래프)</h3>
             <ResponsiveContainer width="100%" height={400}>
-              <BarChart data={genreVotes}>
-                <XAxis dataKey="genre" />
+              <BarChart data={genreVotes} margin={{ bottom: 80 }}>
+                <XAxis dataKey="genre" interval={0} tick={{ fontSize: 8 }}/>
                 <YAxis allowDecimals={false} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="count" fill="#3b82f6" />
