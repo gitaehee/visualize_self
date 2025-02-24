@@ -16,7 +16,7 @@ st.write("실시간 투표 결과를 확인하세요!")
 
 # 영화 제목을 장르로 변환하는 매핑
 genre_mapping = {
-    "After Sunset": "로맨스",
+    "After Sunrise": "로맨스",
     "TITANIC": "뮤지컬",
     "Red Room": "공포",
     "장화 싫은 고양이": "애니메이션",

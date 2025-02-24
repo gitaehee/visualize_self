@@ -58,8 +58,9 @@ const posterContainerStyle = css`
 `;
 
 const posterStyle = css`
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 8px;
   cursor: pointer;
 `;
 
@@ -74,10 +75,11 @@ const descriptionStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: left;
 
-  /* 설명글 왼쪽 정렬 */
-  padding-left: 10px;
+   /* 설명글 왼쪽 정렬 */
+  text-align: left;
+ 
+  padding: 10px;
 
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
@@ -104,12 +106,12 @@ const buttonStyle = css`
 
 const movies = [
   {
-    title: "After Sunset",
+    title: "After Sunrise",
     genre: "로맨스",
     director: "감독 A",
     actors: "배우1, 배우2",
     runngingtime: "1시간",
-    summary: "사랑 이야기",
+    summary: "폭풍우로 배가 난파되고 아름다운 섬에 떠내려온 연인. 그러나 이 섬에는 특별한 비밀이 있다. 아침이 올 때마다 사랑을 다시 시작해야 하는 그들의 기적 같은 이야기.",
     poster: "/posters/romance.svg",
   },
   {

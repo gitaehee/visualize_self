@@ -4118,7 +4118,7 @@ export default function Explore() {
   
     function renderChart() {
         return (
-            <div style={{ width: "1200px", display: "flex", justifyContent: "center" }}>
+            <div style={{ width: "1400px", display: "flex", justifyContent: "center" }}>
                 <ResponsiveContainer width="100%" height={600}>
                     {chartType === "Bar" ? (
                     <BarChart data={formattedData}>

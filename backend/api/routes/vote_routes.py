@@ -7,7 +7,7 @@ vote_bp = Blueprint('vote', __name__, url_prefix='/api')
 
 votes = {
     "Red Room": 0,
-    "After Sunset": 0,
+    "After Sunrise": 0,
     "왕빙어모": 0,
     "The seekers of stars": 0,
     "CODENAME:000": 0,
