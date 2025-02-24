@@ -4050,7 +4050,7 @@ export default function Explore() {
                 <div style={{
                     padding: "10px",
                     fontSize: "14px",
-                    backgroundColor: "plum",
+                    backgroundColor: "mediumpurple",
                     borderRadius: "8px",
                     //position: "absolute",
                     //left: `${left}px`, // ✅ X 위치 보정
@@ -4126,7 +4126,7 @@ export default function Explore() {
                         <XAxis dataKey="x" tickFormatter={(tick) => tick.toLocaleString()} />
                         <YAxis width={150} domain={["auto", "auto"]} tickFormatter={(tick) => tick.toLocaleString()} />
                         <Tooltip content={<CustomTooltip chartType="Bar" />} />
-                        <Bar dataKey="y" fill="#8884d8" />
+                        <Bar dataKey="y" fill="steelblue" />
                     </BarChart>
                     ) : chartType === "Line" ? (
                     <LineChart data={formattedData}>
@@ -4134,7 +4134,7 @@ export default function Explore() {
                         <XAxis dataKey="x" tickFormatter={(tick) => tick.toLocaleString()} />
                         <YAxis width={150} domain={["auto", "auto"]} tickFormatter={(tick) => tick.toLocaleString()} />
                         <Tooltip content={<CustomTooltip chartType="Line" />} />
-                        <Line type="monotone" dataKey="y" stroke="#8884d8" />
+                        <Line type="monotone" dataKey="y" stroke="palevioletred" />
                     </LineChart>
                     ) : (
                     <ScatterChart>

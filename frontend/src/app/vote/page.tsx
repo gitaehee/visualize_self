@@ -120,7 +120,7 @@ const movies = [
     director: "감독 B",
     actors: "배우3, 배우4",
     runngingtime: "2시간",
-    summary: "음악과 춤 이야기",
+    summary: "거대한 꿈, 찬란한 희망, 그리고 운명의 밤. 전 세계를 감동시킨 타이타닉이 뮤지컬 영화로 돌아온다.",
     poster: "/posters/musical.svg",
   },
   {
@@ -129,7 +129,7 @@ const movies = [
     director: "감독 C",
     actors: "배우5, 배우6",
     runngingtime: "2시간",
-    summary: "긴장감 넘치는 이야기",
+    summary: "홍수로 인해 갑자기 묵게 된 호텔. 위층에서 먼저 올라간 아내의 목소리가 들리고, 빨간 문을 연 순간 수십 개의 똑같은 얼굴이 천천히 고개를 돌리는데..!",
     poster: "/posters/horror.svg",
   },
   {
@@ -138,7 +138,7 @@ const movies = [
     director: "감독 D",
     actors: "배우7, 배우8",
     runngingtime: "1시간",
-    summary: "애니메이션 모험",
+    summary: "매일 비가 오는 ‘소나기’ 마을에 사는 고양이 ‘토토’. 언제나 햇빛과 먹을 것이 가득하다는 츄르월드를 찾아 모험을 떠나게 되는데..!",
     poster: "/posters/animation.svg",
   },
   {
@@ -147,7 +147,7 @@ const movies = [
     director: "감독 E",
     actors: "배우9, 배우10",
     runngingtime: "3시간",
-    summary: "스릴 넘치는 액션",
+    summary: "최초의 첩보요원. 코드네임 000. 국적, 성별, 나이 미상. 다양한 세력이 갑자기 돌아온 그를 쫓는다. 그는 왜 돌아온 것일까? 올해, 가장 위험한 요원이 깨어난다.",
     poster: "/posters/action.svg",
   },
   {
@@ -156,7 +156,7 @@ const movies = [
     director: "감독 F",
     actors: "배우11, 배우12",
     runngingtime: "3시간",
-    summary: "역사적 사실 기반",
+    summary: "횡단보도를 지나다가 트럭에 치이고, 눈 떠보니 왕..?! 근데 나.. 한자도 잘 모르는데 안들키고 살아남을 수 있을까?",
     poster: "/posters/history.svg",
   },
   {
@@ -165,7 +165,7 @@ const movies = [
     director: "감독 G",
     actors: "배우13, 배우14",
     runngingtime: "2시간",
-    summary: "유쾌한 이야기",
+    summary: "그것은 어느 날, 갑자기 나타났다. 어떠한 공격도, 미동도 없이 지나간 1년 후에 하늘에서 수십대의 UFO가 착륙하기 시작한다..!",
     poster: "/posters/sf.svg",
   },
   {
@@ -174,7 +174,7 @@ const movies = [
     director: "감독 H",
     actors: "배우15, 배우16",
     runngingtime: "3시간",
-    summary: "마법과 모험",
+    summary: "세상의 모든 별이 갑자기 사라졌다! 세상은 혼란에 빠지고, 별을 되찾기 위해 ‘별을 찾는 자들’이 나타나게 된다..!",
     poster: "/posters/fantasy.svg",
   },
 ];
