@@ -10,7 +10,7 @@ const containerStyle = css`
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  background-image: url("/awardsimages/section1.svg");
+  background-image: url("/awardsimages/section3.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -41,13 +41,13 @@ const buttonStyle = css`
   }
 `;
 
-export default function Awards() {
+export default function Awards3() {
   const router = useRouter(); // 페이지 이동을 위한 useRouter
 
   return (
     <div css={containerStyle}>
-      <h1 css={messageStyle}>음</h1>
-      <button css={buttonStyle} onClick={() => router.push("/awards/awards1")}>
+      <h1 css={messageStyle}>333</h1>
+      <button css={buttonStyle} onClick={() => router.push("/")}>
         다음
       </button>
     </div>

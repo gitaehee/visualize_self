@@ -11,7 +11,8 @@ const containerStyle = css`
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
-  min-height: 100vh;
+  min-height: 110vh;
+  padding-bottom: 140px;
 `;
 
 const titleStyle = css`
@@ -23,13 +24,24 @@ const titleStyle = css`
 const gridContainerStyle = css`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
   width: 100%;
   max-width: 900px;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
   justify-items: center;
+
+  /* ✅ 모바일 대응: 작은 화면에서는 2열 */
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* ✅ 더 작은 화면에서는 1열 */
+  @media (max-width: 350px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const movieCardStyle = css`
@@ -38,6 +50,8 @@ const movieCardStyle = css`
   align-items: center;
   text-align: center;
   position: relative;
+  width: 100%; /* ✅ 부모 컨테이너가 유동적으로 조정됨 */
+  max-width: 192px; /* ✅ 버튼과 크기 맞추기 */
 `;
 
 const posterContainerStyle = css`
@@ -45,8 +59,8 @@ const posterContainerStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 245px;
-  height: 352px;
+  width: 172.8px;
+  height: 248.4px;
   background: white;
   border-radius: 8px;
   overflow: hidden;
@@ -54,6 +68,12 @@ const posterContainerStyle = css`
 
   &:hover .description {
     opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (max-width: 300px) {
+    width: 172.8px;
+    height: 248.4px;
   }
 `;
 
@@ -74,16 +94,39 @@ const descriptionStyle = css`
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-start;
 
-   /* 설명글 왼쪽 정렬 */
+  /* 설명글 왼쪽 정렬 */
   text-align: left;
  
   padding: 10px;
 
+  /* ✨ 스크롤 가능하도록 설정 */
+  overflow-y: auto;
+  max-height: 100%;
+  box-sizing: border-box; /* 패딩 포함하여 크기 조절 */
+
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   pointer-events: none;
+
+  line-height: 1.5;
+  font-size: 13px;
+
+  /* ✨ 스크롤바 스타일 */
+  &::-webkit-scrollbar {
+    width: 5px; /* ✨ 스크롤바 너비 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.6); /* ✨ 스크롤바 색상 */
+    border-radius: 8px; /* ✨ 둥글게 */
+  }
+
+  @media (max-width: 300px) {
+    font-size: 12px; /* ✅ 모바일에서 폰트 크기 더 축소 */
+  }
+
 `;
 
 const buttonStyle = css`
@@ -95,12 +138,20 @@ const buttonStyle = css`
   transition: background-color 0.2s ease-in-out;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.7rem;
   text-align: center;
-  width: 245px;
+  width: 100%; /* ✅ 모바일에서도 꽉 차게 */
+  width: 172.8px;
 
   &:hover {
     background-color: #2563eb;
+  }
+
+  /* ✅ 모바일에서 버튼이 너무 크면 더 작게 조정 */
+  @media (max-width: 600px) {
+    font-size: 0.7rem;
+    padding: 0.6rem;
+    width: 172.8px;
   }
 `;
 
@@ -108,8 +159,8 @@ const movies = [
   {
     title: "After Sunrise",
     genre: "로맨스",
-    director: "감독 A",
-    actors: "배우1, 배우2",
+    director: "닉 카사베츠",
+    actors: "티모시 샬라메, 밀리 바비 브라운",
     runngingtime: "1시간",
     summary: "폭풍우로 배가 난파되고 아름다운 섬에 떠내려온 연인. 그러나 이 섬에는 특별한 비밀이 있다. 아침이 올 때마다 사랑을 다시 시작해야 하는 그들의 기적 같은 이야기.",
     poster: "/posters/romance.svg",
@@ -117,64 +168,64 @@ const movies = [
   {
     title: "TITANIC",
     genre: "뮤지컬",
-    director: "감독 B",
-    actors: "배우3, 배우4",
+    director: "앤듀르 로이드 웨버",
+    actors: "엠마 스톤, 레이디가가",
     runngingtime: "2시간",
-    summary: "음악과 춤 이야기",
+    summary: "거대한 꿈, 찬란한 희망, 그리고 운명의 밤. 전 세계를 감동시킨 타이타닉이 뮤지컬 영화로 돌아온다.",
     poster: "/posters/musical.svg",
   },
   {
     title: "Red Room",
     genre: "공포",
-    director: "감독 C",
-    actors: "배우5, 배우6",
+    director: "박찬욱",
+    actors: "김고은, 주지훈",
     runngingtime: "2시간",
-    summary: "긴장감 넘치는 이야기",
+    summary: "홍수로 인해 갑자기 묵게 된 호텔. 위층에서 먼저 올라간 아내의 목소리가 들리고, 빨간 문을 연 순간 수십 개의 똑같은 얼굴이 천천히 고개를 돌리는데..!",
     poster: "/posters/horror.svg",
   },
   {
     title: "장화 싫은 고양이",
     genre: "애니메이션",
-    director: "감독 D",
-    actors: "배우7, 배우8",
+    director: "미야자키 하야오",
+    actors: "강수진, 신용우",
     runngingtime: "1시간",
-    summary: "애니메이션 모험",
+    summary: "매일 비가 오는 ‘소나기’ 마을에 사는 고양이 ‘토토’. 언제나 햇빛과 먹을 것이 가득하다는 츄르월드를 찾아 모험을 떠나게 되는데..!",
     poster: "/posters/animation.svg",
   },
   {
     title: "CODENAME:000",
     genre: "액션",
-    director: "감독 E",
-    actors: "배우9, 배우10",
+    director: "봉준호",
+    actors: "전지현, 현빈",
     runngingtime: "3시간",
-    summary: "스릴 넘치는 액션",
+    summary: "최초의 첩보요원. 코드네임 000. 국적, 성별, 나이 미상. 다양한 세력이 갑자기 돌아온 그를 쫓는다. 그는 왜 돌아온 것일까? 올해, 가장 위험한 요원이 깨어난다.",
     poster: "/posters/action.svg",
   },
   {
     title: "왕빙어모",
     genre: "역사",
-    director: "감독 F",
-    actors: "배우11, 배우12",
+    director: "황동혁",
+    actors: "최수종, 이정재",
     runngingtime: "3시간",
-    summary: "역사적 사실 기반",
+    summary: "횡단보도를 지나다가 트럭에 치이고, 눈 떠보니 왕..?! 근데 나.. 한자도 잘 모르는데 안들키고 살아남을 수 있을까?",
     poster: "/posters/history.svg",
   },
   {
     title: "UFO: the silent invasion",
     genre: "SF",
-    director: "감독 G",
-    actors: "배우13, 배우14",
+    director: "크리스토퍼 놀란",
+    actors: "브래드 피트, 앤 해서웨이",
     runngingtime: "2시간",
-    summary: "유쾌한 이야기",
+    summary: "그것은 어느 날, 갑자기 나타났다. 어떠한 공격도, 미동도 없이 지나간 1년 후에 하늘에서 수십대의 UFO가 착륙하기 시작한다..!",
     poster: "/posters/sf.svg",
   },
   {
     title: "The seekers of stars",
     genre: "판타지",
-    director: "감독 H",
-    actors: "배우15, 배우16",
+    director: "연상호",
+    actors: "이도현, 신세경",
     runngingtime: "3시간",
-    summary: "마법과 모험",
+    summary: "세상의 모든 별이 갑자기 사라졌다! 세상은 혼란에 빠지고, 별을 되찾기 위해 ‘별을 찾는 자들’이 나타나게 된다..!",
     poster: "/posters/fantasy.svg",
   },
 ];
@@ -220,28 +271,16 @@ export default function Vote() {
 
   return (
     <div css={containerStyle}>
-      <h1 css={titleStyle}>영화 예약</h1>
+      <h1 css={titleStyle}>영화 예매</h1>
       <p>포스터를 클릭하면 상세 내용이 보여요!</p>
+      {/* 위쪽 4개 영화 */}
       <div css={gridContainerStyle}>
-        {movies.map((movie) => (
+        {movies.slice(0, 4).map((movie) => (
           <div key={movie.title} css={movieCardStyle}>
-            <div
-              css={posterContainerStyle}
-              onClick={() => toggleDescription(movie.title)}
-            >
-              <div
-                css={[
-                  descriptionStyle,
-                  activeMovie === movie.title && {
-                    opacity: 1,
-                    pointerEvents: "auto",
-                  },
-                ]}
-                className="description"
-              >
-                <p>
-                  <strong>{movie.title}</strong>
-                </p>
+            <div css={posterContainerStyle}>
+              {/* 🎯 마우스를 올리면 보이도록 hover 스타일만 사용 */}
+              <div css={descriptionStyle} className="description">
+                <p><strong>{movie.title}</strong></p>
                 <p>장르: {movie.genre}</p>
                 <p>감독: {movie.director}</p>
                 <p>출연: {movie.actors}</p>
@@ -251,7 +290,33 @@ export default function Vote() {
               <img src={movie.poster} alt={movie.title} css={posterStyle} />
             </div>
             <button css={buttonStyle} onClick={() => handleVote(movie.title)}>
-              {movie.title} 예약
+              {movie.title} 예매
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* 중간 여백 추가 */}
+      <div css={css`height: 35px;`} /> 
+
+      {/* 아래쪽 4개 영화 */}
+      <div css={gridContainerStyle}>
+        {movies.slice(4, 8).map((movie) => (
+          <div key={movie.title} css={movieCardStyle}>
+            <div css={posterContainerStyle}>
+              {/* 🎯 hover 효과로 자동 표시 */}
+              <div css={descriptionStyle} className="description">
+                <p><strong>{movie.title}</strong></p>
+                <p>장르: {movie.genre}</p>
+                <p>감독: {movie.director}</p>
+                <p>출연: {movie.actors}</p>
+                <p>상영시간: {movie.runngingtime}</p>
+                <p>{movie.summary}</p>
+              </div>
+              <img src={movie.poster} alt={movie.title} css={posterStyle} />
+            </div>
+            <button css={buttonStyle} onClick={() => handleVote(movie.title)}>
+              {movie.title} 예매
             </button>
           </div>
         ))}
