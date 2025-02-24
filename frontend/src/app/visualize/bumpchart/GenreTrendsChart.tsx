@@ -8,17 +8,13 @@ const GenreTrendsAreaBump = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/genre-trends`) // Flask API 호출
+      .get(`${API_BASE_URL}/genre-trends`)
       .then((response) => {
-        console.log("🎬 API 응답 데이터:", response.data);
-
-        // ✅ 장르별로 하나의 연속된 시리즈가 되도록 정리
         const transformedData = response.data.map((genreItem) => ({
           id: genreItem.id,
-          data: genreItem.data.sort((a, b) => parseInt(a.x) - parseInt(b.x)), // ✅ 연도 순으로 정렬
+          data: genreItem.data.sort((a, b) => parseInt(a.x) - parseInt(b.x)),
         }));
 
-        console.log(transformedData);
         setData(transformedData);
       })
       .catch((error) => {
@@ -26,53 +22,88 @@ const GenreTrendsAreaBump = () => {
       });
   }, []);
 
+  const customColors = [
+    "#4a69bd",
+    "#6a89cc",
+    "#78e08f",
+    "#38ada9",
+    "#e55039",
+    "#f6b93b",
+    "#fa983a",
+    "#b71540",
+    "#60a3bc",
+  ];
+
+  const CustomTooltip = ({ serie }) => (
+    <div
+      style={{
+        padding: "12px",
+        background: "rgba(255, 255, 255, 0.9)",
+        border: "1px solid #ccc",
+        borderRadius: "6px",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+        color: "#333",
+        fontFamily: "Pretendard, sans-serif",
+        fontSize: "16px",
+        textAlign: "center",
+      }}
+    >
+      <strong>{serie.id}</strong>
+      <div style={{ marginTop: "5px" }}>
+        📅 연도: {serie.data.x}년
+        <br />
+        🎬 개봉 수: {serie.data.y}편
+      </div>
+    </div>
+  );
+
   return (
     <div
       style={{
-        height: "500px",
-        width: "800px",
-        background: "#111",
+        height: "800px", // MovieBarChart와 동일한 높이로 설정 추천
+        width: "1200px", // MovieBarChart와 동일한 너비로 설정 추천
+        backgroundColor: "#222",
         padding: "20px",
         borderRadius: "10px",
+        fontFamily: "Pretendard, sans-serif",
+        fontWeight: "bold",
       }}
     >
       <ResponsiveAreaBump
         data={data}
-        margin={{ top: 40, right: 100, bottom: 80, left: 100 }}
+        margin={{ top: 40, right: 120, bottom: 80, left: 100 }}
         spacing={8}
-        colors={[
-          "#FF6B6B",
-          "#FF9F43",
-          "#FFD166",
-          "#06D6A0",
-          "#118AB2",
-          "#073B4C",
-          "#EF476F",
-          "#8338EC",
-          "#3A86FF",
-        ]} // 🎨 색상 조정
-        blendMode="normal" // ✅ 대비를 높이기 위해 blendMode를 normal로 변경
-        borderWidth={2} // ✅ 선 두께 조정
-        enableGridX={false} // ✅ 연도별 백그라운드 선 제거
+        colors={customColors}
+        blendMode="normal"
+        borderWidth={2}
+        enableGridX={false}
         axisTop={null}
         axisRight={null}
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "연도별 개봉 수",
+          legend: "연도",
           legendPosition: "middle",
           legendOffset: 50,
-          tickTextColor: "#F8F9FA",
+          tickTextColor: "#ffffff",
         }}
         axisLeft={{
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "장르",
+          legend: "장르 순위",
           legendPosition: "middle",
           legendOffset: -80,
-          tickTextColor: "#F8F9FA",
+          tickTextColor: "#ffffff",
+        }}
+        theme={{
+          axis: {
+            ticks: { text: { fontSize: 14, fill: "#fff" } },
+            legend: { text: { fontSize: 16, fill: "#fff" } },
+          },
+          grid: { line: { stroke: "#444", strokeDasharray: "3 3" } },
+          labels: { text: { fill: "#fff" } },
         }}
         defs={[
           {
@@ -101,6 +132,7 @@ const GenreTrendsAreaBump = () => {
         startLabel="id"
         endLabel="id"
         labelTextColor="#FFFFFF"
+        tooltip={CustomTooltip}
       />
     </div>
   );

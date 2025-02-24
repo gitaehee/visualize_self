@@ -7,7 +7,7 @@ import AudienceBarChart from "./barchart/AudienceBarChart";
 
 const titleStyle = css`
   text-align: center;
-  margin-top: 100px;
+  margin-top: 150px;
 `;
 
 const containerStyle = css`
@@ -20,12 +20,15 @@ const containerStyle = css`
 export default function Visualize() {
   return (
     <div>
-      <h4 css={titleStyle}>시각화 페이지</h4>{" "}
       {
         <div css={containerStyle}>
+          <h2 css={titleStyle}>한국 영화 역대 관객수 TOP 10</h2>{" "}
           <MovieBarChart />
+          <h2 css={titleStyle}>배급사별 천만 영화 갯수</h2>
           <DistributorPieChart />
+          <h2 css={titleStyle}>연도별 장르 개봉 횟수</h2>
           <GenreTrendsChart />
+          <h2 css={titleStyle}>연도별 관객수</h2>
           <AudienceBarChart />
         </div>
       }

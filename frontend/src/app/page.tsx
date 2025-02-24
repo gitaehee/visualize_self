@@ -119,22 +119,24 @@ const timelineData = [
 const styles = {
   title: css`
     text-align: center;
-    margin-top: 40px;
-    font-size: 32px;
+    margin: 24px 0 5px;
+    font-size: 24px;
     font-weight: bold;
     color: white;
+    height: 5vh; /* 제목 공간 */
   `,
   scrollContainer: css`
     width: 100vw;
-    height: 100vh;
+    height: 60vh; /* 제목을 제외한 공간 */
     overflow-x: auto;
+    overflow-y: hidden;
     display: flex;
     align-items: center;
     scroll-snap-type: x mandatory;
     white-space: nowrap;
     perspective: 1500px;
     scrollbar-width: none;
-    padding: 40px 40px;
+    padding: 15px 20px;
     position: relative;
 
     &::-webkit-scrollbar {
@@ -143,78 +145,98 @@ const styles = {
   `,
   timelineContainer: css`
     display: flex;
-    position: relative;
-    gap: 800px;
-    padding: 0 600px;
+    gap: 300px; /* 간격 줄이기 */
+    padding: 0 300px;
     min-width: max-content;
     align-items: center;
+    position: relative;
 
     &::before {
       content: "";
       position: absolute;
-      top: 50px;
+      top: 28px;
       left: 0;
-      height: 4px;
+      height: 3px;
       width: 100%;
       background: #ffffff;
       opacity: 0.4;
       z-index: 0;
     }
   `,
+
   yearBlock: css`
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 650px;
-    height: 85vh;
-    padding-top: 100px;
+    width: 600px;
+    height: 60vh; // 원하시는 대로 고정 높이 유지
+    padding: 50px 10px;
+    box-sizing: border-box;
   `,
+
   yearCircle: css`
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background-color: #ffcc00;
-    border: 3px solid #ffffff;
+    border: 2px solid #ffffff;
     position: absolute;
-    top: 42px;
+    top: 26px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
   `,
   year: css`
-    font-size: 40px;
+    font-size: 26px; /* 연도 글씨 크기 축소 */
     font-weight: bold;
     color: #ffcc00;
-    margin-top: 15px;
+    margin-top: 8px;
   `,
   content: css`
-    max-width: 550px;
-    min-height: 150px;
+    max-width: 100%;
     text-align: center;
     color: #ccc;
-    font-size: 18px;
-    margin-top: 20px;
-    line-height: 1.6;
+    font-size: 15px; /* 글씨 크기 축소 */
+    margin-top: 10px;
+    line-height: 1.4;
 
     strong {
       font-weight: 700;
       color: white;
     }
   `,
-  photoWrapper: css`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    position: relative;
-    margin-top: 40px;
+  photoWrapper: (imageCount: number) => css`
+    display: grid;
+    gap: 8px;
+    width: 100%;
+    flex: 1;
+    overflow: visible; // ⭐️ 넘치는 부분을 숨기지 말고, 전부 보이게 함
+
+    ${imageCount === 4
+      ? `
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    `
+      : imageCount === 3
+      ? `
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "img1 img2"
+        "img3 .";
+    `
+      : `
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    `}
   `,
-  image: css`
-    border-radius: 15px;
-    object-fit: cover;
-    width: 550px;
-    height: 400px;
+
+  image: (imageCount: number, index: number) => css`
+    border-radius: 8px;
+    object-fit: contain; // 비율 유지하면서 전부 보이게
+    width: 100%;
+    height: auto; // 높이를 자동으로 설정하여 절대 넘치지 않음
+
+    ${imageCount === 3 ? `grid-area: img${index + 1};` : ""}
   `,
 };
 
@@ -223,7 +245,7 @@ export default function Timeline() {
 
   return (
     <div>
-      <h4 css={styles.title}>📸 연도별 타임라인</h4>
+      <h4 css={styles.title}>한국 영화사</h4>
 
       <div css={styles.scrollContainer} ref={scrollContainerRef}>
         <div css={styles.timelineContainer}>
@@ -236,21 +258,26 @@ export default function Timeline() {
               </motion.span>
               <motion.h3 css={styles.year}>{title}</motion.h3>
               <motion.p css={styles.content}>{description}</motion.p>
-              <motion.div css={styles.photoWrapper}>
+              <div css={styles.photoWrapper(images.length)}>
                 {images.map((src, i) => (
-                  <motion.div key={i}>
+                  <motion.div key={i} css={styles.image(images.length, i)}>
                     <Image
                       src={src}
                       alt={`Year ${year} - Image ${i + 1}`}
-                      width={550}
-                      height={400}
+                      width={400}
+                      height={280}
                       priority
                       unoptimized
-                      css={styles.image}
+                      style={{
+                        width: "100%",
+                        height: "auto", // 이미지 높이를 자동으로 비율 유지
+                        borderRadius: "8px",
+                        objectFit: "contain",
+                      }}
                     />
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>
