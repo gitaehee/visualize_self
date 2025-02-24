@@ -47,7 +47,7 @@ export default function Awards() {
   return (
     <div css={containerStyle}>
       <h1 css={messageStyle}>음</h1>
-      <button css={buttonStyle} onClick={() => router.push("/awards1")}>
+      <button css={buttonStyle} onClick={() => router.push("/awards/awards1")}>
         다음
       </button>
     </div>
