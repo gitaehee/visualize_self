@@ -19,8 +19,8 @@ def load_movies_data():
 
 def load_audience_data():
     if not os.path.exists(AUDIENCE_PATH):
-        raise FileNotFoundError(f"CSV 파일을 찾을 수 없습니다: {CSV_PATH}")
-    df = pd.read_csv(CSV_PATH)
+        raise FileNotFoundError(f"CSV 파일을 찾을 수 없습니다: {AUDIENCE_PATH}")
+    df = pd.read_csv(AUDIENCE_PATH)
     df.columns = df.columns.str.strip()
     df["id"] = df.index  # 고유 ID 추가
     return df

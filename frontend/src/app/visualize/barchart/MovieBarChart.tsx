@@ -1,5 +1,4 @@
-import Image from "next/image"; // ✅ next/image 추가
-
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ResponsiveBar } from "@nivo/bar";
@@ -21,7 +20,6 @@ const MovieBarChart = () => {
           audience_count: Number(movie.관객수.replace(/,/g, "")),
           poster_url: movie.poster_url,
         }));
-        console.log(formattedData);
         setData(formattedData);
       })
       .catch((error) => {
@@ -29,7 +27,6 @@ const MovieBarChart = () => {
       });
   }, []);
 
-  // 🎨 블루 & 퍼플 계열의 톤다운된 색상 팔레트
   const customColors = [
     "#4a69bd",
     "#6a89cc",
@@ -43,46 +40,43 @@ const MovieBarChart = () => {
     "#82ccdd",
   ];
 
-  // 🎭 툴팁 스타일 개선
-  const CustomTooltip = ({ data: d }) => {
-    return (
-      <div
-        style={{
-          padding: "10px",
-          background: "rgba(255, 255, 255, 0.9)",
-          border: "1px solid #ccc",
-          borderRadius: "5px",
-          textAlign: "center",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-          color: "#333",
-        }}
-      >
-        <strong>{d.movie_name}</strong>
-        <div>👥 {d.audience_count.toLocaleString()}명</div>
-        {d.poster_url && (
-          <Image
-            src={d.poster_url}
-            alt={d.movie_name}
-            width={90}
-            height={135}
-            style={{
-              marginTop: "8px",
-              borderRadius: "5px",
-            }}
-          />
-        )}
-      </div>
-    );
-  };
+  const CustomTooltip = ({ data: d }) => (
+    <div
+      style={{
+        padding: "10px",
+        background: "rgba(255, 255, 255, 0.9)",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        textAlign: "center",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+        color: "#333",
+        fontFamily: "Pretendard, sans-serif",
+      }}
+    >
+      <strong>{d.movie_name}</strong>
+      <div>👥 {Math.round(d.audience_count / 10000).toLocaleString()}만 명</div>
+      {d.poster_url && (
+        <Image
+          src={d.poster_url}
+          alt={d.movie_name}
+          width={90}
+          height={135}
+          style={{ marginTop: "8px", borderRadius: "5px" }}
+        />
+      )}
+    </div>
+  );
 
   return (
     <div
       style={{
-        height: "500px",
-        width: "800px",
+        height: "800px",
+        width: "1200px",
         backgroundColor: "#222",
         padding: "20px",
         borderRadius: "10px",
+        fontFamily: "Pretendard, sans-serif",
+        fontWeight: "bold",
       }}
     >
       <ResponsiveBar
@@ -93,7 +87,7 @@ const MovieBarChart = () => {
         }
         keys={["audience_count"]}
         indexBy="movie_name"
-        margin={{ top: 50, right: 50, bottom: 100, left: 80 }}
+        margin={{ top: 50, right: 50, bottom: 120, left: 100 }}
         padding={0.3}
         colors={({ index }) => customColors[index % customColors.length]}
         borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
@@ -107,34 +101,32 @@ const MovieBarChart = () => {
           tickRotation: 30,
           legend: "영화명",
           legendPosition: "middle",
-          legendOffset: 60,
-          tickTextColor: "#fff", // ✅ X축 레이블을 흰색으로 변경
+          legendOffset: 70,
         }}
         axisLeft={{
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "관객수",
+          legend: "관객수 (만 명)",
           legendPosition: "middle",
-          legendOffset: -60,
-          format: (value) => value.toLocaleString(),
-          tickTextColor: "#fff", // ✅ Y축 레이블을 흰색으로 변경
+          legendOffset: -80,
+          format: (value) => `${Math.round(value / 10000).toLocaleString()}만`,
         }}
         theme={{
           axis: {
-            ticks: { text: { fontSize: 12, fill: "#fff" } }, // ✅ X축, Y축 글자 색상 흰색
-            legend: { text: { fontSize: 14, fill: "#fff" } }, // ✅ 범례 색상 흰색
+            ticks: { text: { fontSize: 14, fill: "#fff" } },
+            legend: { text: { fontSize: 16, fill: "#fff" } },
           },
-          grid: {
-            line: { stroke: "#444", strokeDasharray: "3 3" }, // ✅ 눈금선을 배경과 조화롭게 변경
-          },
+          grid: { line: { stroke: "#444", strokeDasharray: "3 3" } },
         }}
         enableLabel={true}
         labelSkipWidth={12}
         labelSkipHeight={12}
-        labelTextColor="#fff" // ✅ 막대 위 숫자도 흰색으로 변경
-        valueFormat={(value) => value.toLocaleString()} // ✅ 숫자 쉼표 추가
-        gridYValues={5} // ✅ Y축 눈금 개수 조정
+        labelTextColor="#fff"
+        valueFormat={(value) =>
+          `${Math.round(value / 10000).toLocaleString()}만`
+        }
+        gridYValues={5}
       />
     </div>
   );

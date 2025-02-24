@@ -59,11 +59,16 @@ def get_distributor_counts():
     result = distributor_counts.to_dict(orient='records')
     return jsonify(result)
 
+# audience 라우트 수정
 @movies_bp.route('/audience', methods=['GET'])
 def audience():
+    # '연도' 컬럼을 숫자로 변환
+    data['연도'] = data['연도'].astype(int)
     filtered_data = data[(data['연도'] >= 1990) & (data['연도'] <= 2025)]
+    
     response = [
-        {"year": int(row['연도']), "audience": int(row['관객수'].replace(',', ''))}
+        {"year": int(row['연도']), "audience": int(row['전체_관객수'].replace(',', ''))}
         for _, row in filtered_data.iterrows()
     ]
+    print(response)
     return jsonify(response)
