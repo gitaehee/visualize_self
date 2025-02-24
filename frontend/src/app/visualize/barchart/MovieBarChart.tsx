@@ -59,8 +59,8 @@ const MovieBarChart = () => {
         <Image
           src={d.poster_url}
           alt={d.movie_name}
-          width={90}
-          height={135}
+          width={180}
+          height={270}
           style={{ marginTop: "8px", borderRadius: "5px" }}
         />
       )}

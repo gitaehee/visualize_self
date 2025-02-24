@@ -10,15 +10,11 @@ const DistributorPieChart = () => {
     axios
       .get(`${API_BASE_URL}/distributor-counts`)
       .then((response) => {
-        console.log("🎬 API 응답 데이터:", response.data);
-
-        // 🎯 데이터 변환 (Nivo PieChart 형식)
         const formattedData = response.data.map((item) => ({
-          id: item.배급사, // 라벨
-          label: item.배급사, // 툴팁에 표시될 배급사명
-          value: item.count, // 영화 개수
+          id: item.배급사,
+          label: item.배급사,
+          value: item.count,
         }));
-
         setData(formattedData);
       })
       .catch((error) => {
@@ -26,17 +22,48 @@ const DistributorPieChart = () => {
       });
   }, []);
 
+  const customColors = [
+    "#4a69bd",
+    "#6a89cc",
+    "#78e08f",
+    "#38ada9",
+    "#e55039",
+    "#f6b93b",
+    "#fa983a",
+    "#b71540",
+    "#60a3bc",
+    "#82ccdd",
+  ];
+
+  const CustomTooltip = ({ datum }) => (
+    <div
+      style={{
+        padding: "10px",
+        background: "rgba(255, 255, 255, 0.9)",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        textAlign: "center",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+        color: "#333",
+        fontFamily: "Pretendard, sans-serif",
+      }}
+    >
+      <strong>{datum.id}</strong>
+      <div>🎬 {datum.value}편</div>
+    </div>
+  );
+
   return (
     <div
       style={{
-        height: "500px",
-        width: "500px",
-        background: "#222",
+        height: "800px",
+        width: "1200px",
+        backgroundColor: "#222",
         padding: "20px",
         borderRadius: "10px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        fontFamily: "Pretendard, sans-serif",
+        fontWeight: "bold",
+        color: "#fff",
       }}
     >
       <ResponsivePie
@@ -45,48 +72,49 @@ const DistributorPieChart = () => {
             ? data
             : [{ id: "데이터 없음", label: "데이터 없음", value: 1 }]
         }
-        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-        innerRadius={0.5}
+        margin={{ top: 50, right: 120, bottom: 160, left: 80 }} // 🎯 아래 공간 충분히 확보
+        innerRadius={0.6}
         padAngle={2}
         cornerRadius={5}
-        colors={{ scheme: "set3" }} // 🎨 부드러운 색상 적용
+        colors={customColors}
         borderWidth={2}
-        borderColor={{ from: "color", modifiers: [["darker", 0.6]] }}
-        activeOuterRadiusOffset={10} // ✅ 호버 시 크기 확대 효과 추가
+        borderColor={{ from: "color", modifiers: [["darker", 0.8]] }}
+        activeOuterRadiusOffset={8}
         enableArcLinkLabels={true}
         arcLinkLabelsSkipAngle={10}
-        arcLinkLabelsTextColor="#fff" // ✅ 다크 모드에서 링크 색상 흰색
+        arcLinkLabelsTextColor="#fff"
         arcLinkLabelsThickness={2}
         arcLinkLabelsStraightLength={10}
-        arcLinkLabelsDiagonalLength={15}
+        arcLinkLabelsDiagonalLength={20}
         enableArcLabels={true}
-        arcLabelsRadiusOffset={0.65}
-        arcLabelsTextColor="#fff" // ✅ 다크 모드에서 라벨 색상 흰색
-        tooltip={({ datum }) => (
-          <div
-            style={{
-              padding: "8px",
-              background: "rgba(255, 255, 255, 0.9)",
-              color: "#333",
-              borderRadius: "5px",
-              textAlign: "center",
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            <strong>{datum.id}</strong>
-            <div>🎬 {datum.value}편</div>
-          </div>
-        )} // ✅ 툴팁 스타일 개선
+        arcLabelsRadiusOffset={0.55}
+        arcLabelsTextColor="#fff"
+        tooltip={CustomTooltip}
+        theme={{
+          labels: {
+            text: {
+              fontSize: 14,
+              fill: "#fff",
+            },
+          },
+          legends: {
+            text: {
+              fontSize: 14,
+              fill: "#fff",
+            },
+          },
+        }}
         legends={[
           {
-            anchor: "bottom",
-            direction: "row",
+            anchor: "right",
+            direction: "column", // 🎯 핵심
             justify: false,
-            translateY: 60,
+            translateX: 0,
+            translateY: 80,
             itemsSpacing: 10,
-            itemWidth: 100,
-            itemHeight: 18,
-            itemTextColor: "#fff", // ✅ 범례 색상 변경
+            itemWidth: 120,
+            itemHeight: 20,
+            itemTextColor: "#fff",
             symbolSize: 18,
             symbolShape: "circle",
           },
