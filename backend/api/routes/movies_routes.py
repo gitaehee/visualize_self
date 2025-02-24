@@ -14,6 +14,8 @@ movies_bp = Blueprint('movies', __name__, url_prefix='/api')
 df = load_movies_data()
 df = add_release_year(df)
 
+data = pd.read_csv('연도별관객수및매출액.csv')
+
 # 모든 연도의 목록 생성 (예: [최소연도, ..., 최대연도])
 ALL_YEARS = list(range(int(df["개봉연도"].min()), int(df["개봉연도"].max()) + 1))
 
@@ -57,3 +59,12 @@ def get_distributor_counts():
     distributor_counts = df_10m.groupby('배급사').size().reset_index(name='count')
     result = distributor_counts.to_dict(orient='records')
     return jsonify(result)
+
+@movies_bp.route('/audience', methods=['GET'])
+def audience():
+    filtered_data = data[(data['연도'] >= 1990) & (data['연도'] <= 2025)]
+    response = [
+        {"year": int(row['연도']), "audience": int(row['관객수'].replace(',', ''))}
+        for _, row in filtered_data.iterrows()
+    ]
+    return jsonify(response)

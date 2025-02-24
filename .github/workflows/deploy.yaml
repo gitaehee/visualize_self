@@ -1,0 +1,20 @@
+# .github/workflows/deploy.yaml
+# 자동 배포
+name: Auto Update
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Run Runner
+        run: |
+          cd ~
+          ./deploy.sh
