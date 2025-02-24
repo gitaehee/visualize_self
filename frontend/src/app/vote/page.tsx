@@ -61,7 +61,6 @@ const posterStyle = css`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
   cursor: pointer;
 `;
 
@@ -76,10 +75,11 @@ const descriptionStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: left;
 
-  /* 설명글 왼쪽 정렬 */
-  padding-left: 10px;
+   /* 설명글 왼쪽 정렬 */
+  text-align: left;
+ 
+  padding: 10px;
 
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
@@ -106,16 +106,16 @@ const buttonStyle = css`
 
 const movies = [
   {
-    title: "애프터 선셋",
+    title: "After Sunrise",
     genre: "로맨스",
     director: "감독 A",
     actors: "배우1, 배우2",
     runngingtime: "1시간",
-    summary: "사랑 이야기",
+    summary: "폭풍우로 배가 난파되고 아름다운 섬에 떠내려온 연인. 그러나 이 섬에는 특별한 비밀이 있다. 아침이 올 때마다 사랑을 다시 시작해야 하는 그들의 기적 같은 이야기.",
     poster: "/posters/romance.svg",
   },
   {
-    title: "우는 남자",
+    title: "TITANIC",
     genre: "뮤지컬",
     director: "감독 B",
     actors: "배우3, 배우4",
@@ -124,16 +124,16 @@ const movies = [
     poster: "/posters/musical.svg",
   },
   {
-    title: "무서워",
-    genre: "스릴러",
+    title: "Red Room",
+    genre: "공포",
     director: "감독 C",
     actors: "배우5, 배우6",
     runngingtime: "2시간",
     summary: "긴장감 넘치는 이야기",
-    poster: "/posters/thriller.svg",
+    poster: "/posters/horror.svg",
   },
   {
-    title: "장화 안 신은 고양이",
+    title: "장화 싫은 고양이",
     genre: "애니메이션",
     director: "감독 D",
     actors: "배우7, 배우8",
@@ -142,7 +142,7 @@ const movies = [
     poster: "/posters/animation.svg",
   },
   {
-    title: "액션히어로",
+    title: "CODENAME:000",
     genre: "액션",
     director: "감독 E",
     actors: "배우9, 배우10",
@@ -151,7 +151,7 @@ const movies = [
     poster: "/posters/action.svg",
   },
   {
-    title: "태정태세문단세",
+    title: "왕빙어모",
     genre: "역사",
     director: "감독 F",
     actors: "배우11, 배우12",
@@ -160,16 +160,16 @@ const movies = [
     poster: "/posters/history.svg",
   },
   {
-    title: "아마..존",
-    genre: "코미디",
+    title: "UFO: the silent invasion",
+    genre: "SF",
     director: "감독 G",
     actors: "배우13, 배우14",
     runngingtime: "2시간",
     summary: "유쾌한 이야기",
-    poster: "/posters/comedy.svg",
+    poster: "/posters/sf.svg",
   },
   {
-    title: "ufo 판타지",
+    title: "The seekers of stars",
     genre: "판타지",
     director: "감독 H",
     actors: "배우15, 배우16",

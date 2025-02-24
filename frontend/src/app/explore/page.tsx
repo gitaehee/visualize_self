@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { css } from "@emotion/react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, LineChart, Line, ScatterChart, Scatter } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, LineChart, Line, ScatterChart, Scatter, ResponsiveContainer } from "recharts";
 
 // 200줄 CSV 데이터를 JSON으로 변환한 후 삽입 (직접 추가)
 const moviesData = [
@@ -4025,10 +4025,21 @@ export default function Explore() {
 
 
     // ✅ 툴팁 커스텀 컴포넌트 추가
-    const CustomTooltip = ({ active, payload }: any) => {
+    const CustomTooltip = ({ active, payload, coordinate, chartType }: any) => {
         if (active && payload && payload.length) {
             // ✅ 올바른 데이터 찾기 (payload 배열을 사용하여 가장 가까운 점을 선택)
             const data = payload[0].payload; // ✅ 첫 번째 데이터 객체 가져오기
+
+            // ✅ 마우스 위치 반영 (coordinate가 없으면 payload[0].coordinate 사용)
+            let left = coordinate?.x ?? payload[0]?.coordinate?.x ?? 0;
+            let top = coordinate?.y ?? payload[0]?.coordinate?.y ?? 0;
+
+            // ✅ ScatterChart는 coordinate 값이 정상적으로 들어오지만, Bar/Line은 보정 필요
+            if (chartType !== "Scatter") {
+                left = payload[0]?.coordinate?.x ?? left;
+                top = payload[0]?.coordinate?.y ?? top;
+            }
+
 
             if (!data) return null;
 
@@ -4041,10 +4052,18 @@ export default function Explore() {
                     fontSize: "14px",
                     backgroundColor: "plum",
                     borderRadius: "8px",
+                    //position: "absolute",
+                    //left: `${left}px`, // ✅ X 위치 보정
+                    //top: `${top}px`, // ✅ Y 위치 보정
+                    transform: "translate(0%, -50%)", // ✅ 중앙 정렬 + 약간 위로 조정
+                    pointerEvents: "none",
+                    whiteSpace: "nowrap",
                 }}>
-                    <p><strong>{data.영화명 || "알 수 없음"}</strong></p>
+                    <p><strong>{data.영화명}</strong></p>
                     <p>{xAxis} : {xValue}</p>
                     <p>{yAxis} : {yValue}</p>
+                    <p style={{ color: "gainsboro" }}>장르 : {data.장르}</p>
+                    <p style={{ color: "gainsboro" }}>개봉일 : {data.개봉일}</p>
                 </div>
             );
         }   
@@ -4055,6 +4074,12 @@ export default function Explore() {
 
     // ✅ X축 선택 시 Y축 옵션에서 자동 제외
     const availableYOptions = useMemo(() => numericColumns.filter((col) => col !== xAxis), [xAxis]);
+
+    const chartColors: Record<string, string> = { // 그래프 종류 버튼 색
+        Bar: "lightblue",
+        Line: "lightpink",
+        Scatter: "lightgreen",
+      };
   
     // ✅ X축, Y축 변경 시 데이터 변환 + 정렬
     useEffect(() => {
@@ -4079,6 +4104,8 @@ export default function Explore() {
   
         return {
           영화명: d.영화명, // ✅ 영화명 추가
+          장르: d.장르,    // ✅ 장르 추가
+          개봉일: d.개봉일, // ✅ 개봉일 추가
           x: parseFloat(String(xValue).replace(/,/g, "")) || 0,
           y: parseFloat(String(yValue).replace(/,/g, "")) || 0,
         };
@@ -4090,51 +4117,49 @@ export default function Explore() {
     }, [xAxis, yAxis]);
   
     function renderChart() {
-      switch (chartType) {
-        case "Bar":
-          return (
-            <BarChart data={formattedData} width={800} height={600}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="x" />
-              <YAxis width={120} tickFormatter={(tick) => tick.toLocaleString()} /> {/* ✅ Y축 width 조절 + 포맷팅 */}
-              <Tooltip content={<CustomTooltip />} /> {/* ✅ 툴팁 변경 */}
-              <Bar dataKey="y" fill="#8884d8" />
-            </BarChart>
+        return (
+            <div style={{ width: "1400px", display: "flex", justifyContent: "center" }}>
+                <ResponsiveContainer width="100%" height={600}>
+                    {chartType === "Bar" ? (
+                    <BarChart data={formattedData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="x" tickFormatter={(tick) => tick.toLocaleString()} />
+                        <YAxis width={150} domain={["auto", "auto"]} tickFormatter={(tick) => tick.toLocaleString()} />
+                        <Tooltip content={<CustomTooltip chartType="Bar" />} />
+                        <Bar dataKey="y" fill="#8884d8" />
+                    </BarChart>
+                    ) : chartType === "Line" ? (
+                    <LineChart data={formattedData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="x" tickFormatter={(tick) => tick.toLocaleString()} />
+                        <YAxis width={150} domain={["auto", "auto"]} tickFormatter={(tick) => tick.toLocaleString()} />
+                        <Tooltip content={<CustomTooltip chartType="Line" />} />
+                        <Line type="monotone" dataKey="y" stroke="#8884d8" />
+                    </LineChart>
+                    ) : (
+                    <ScatterChart>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis
+                        type="number"
+                        dataKey="x"
+                        domain={["auto", "auto"]}
+                        tickFormatter={(tick) => tick.toLocaleString()} //1000단위로 쉼표 표시 가능
+                        />
+                        <YAxis
+                        dataKey="y"
+                        type="number"
+                        domain={["auto", "auto"]}
+                        width={150}
+                        tickFormatter={(tick) => tick.toLocaleString()}
+                        />
+                        <Tooltip content={<CustomTooltip chartType="Scatter" />} cursor={{ fill: "transparent" }} />
+                        <Scatter name="Scatter Data" data={formattedData} fill="#82ca9d" />
+                    </ScatterChart>
+                    )}
+                </ResponsiveContainer>
+            </div>
+
           );
-        case "Line":
-          return (
-            <LineChart data={formattedData} width={800} height={600}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="x" />
-              <YAxis width={120} tickFormatter={(tick) => tick.toLocaleString()} /> {/* ✅ Y축 width 조절 + 포맷팅 */}
-              <Tooltip content={<CustomTooltip />} /> {/* ✅ 툴팁 변경 */}
-              <Line type="monotone" dataKey="y" stroke="#8884d8" />
-            </LineChart>
-          );
-        case "Scatter":
-          return (
-            <ScatterChart width={800} height={600}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                type="number" // ✅ X축이 숫자형으로 설정되어야 함
-                dataKey="x"
-                domain={["auto", "auto"]} // ✅ 자동으로 범위 설정
-                tickFormatter={(tick) => tick.toLocaleString()} // ✅ 숫자 포맷팅
-              />
-              <YAxis
-                dataKey="y"
-                type="number" // ✅ Y축이 숫자임을 명확히 지정
-                domain={['auto', 'auto']} // ✅ 데이터 범위 자동 조정
-                width={120}
-                tickFormatter={(tick) => tick.toLocaleString()} 
-              />
-              <Tooltip content={<CustomTooltip />} /> {/* ✅ 툴팁 변경 */}
-              <Scatter name="Scatter Data" data={formattedData} fill="#82ca9d" />
-            </ScatterChart>
-          );
-        default:
-          return null;
-      }
     }
   
     return (
@@ -4142,7 +4167,7 @@ export default function Explore() {
           <h4>X축, Y축을 선택하여 그래프를 확인하세요</h4>
       
           {/* ✅ X축, Y축 선택 UI */}
-          <div>
+          <div style={{ display: "flex", gap: "20px", alignItems: "center", marginBottom: "15px" }}>
             <label>
               X축 선택:{" "}
               <select value={xAxis} onChange={(e) => setXAxis(e.target.value)}>
@@ -4167,11 +4192,19 @@ export default function Explore() {
           </div>
       
           {/* ✅ 그래프 선택 버튼 */}
-        <div>
-        {["Bar", "Line", "Scatter"]
+        <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+          {["Bar", "Line", "Scatter"]
             .filter((type) => type !== "Scatter" || isScatterChartAvailable) // ✅ X축이 숫자일 때만 Scatter 버튼 유지
             .map((type) => (
-            <button key={type} onClick={() => setChartType(type)}>
+            <button key={type} onClick={() => setChartType(type)}
+                style={{
+                backgroundColor: chartColors[type], // ✅ 버튼 색상 적용
+                padding: "10px 15px",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+                }}
+            >
                 {type} Chart
             </button>
             ))}
