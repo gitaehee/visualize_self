@@ -38,7 +38,7 @@ const gridContainerStyle = css`
   }
 
   /* ✅ 더 작은 화면에서는 1열 */
-  @media (max-width: 400px) {
+  @media (max-width: 350px) {
     grid-template-columns: repeat(1, 1fr);
   }
 `;
@@ -58,8 +58,8 @@ const posterContainerStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 192px;
-  height: 276px;
+  width: 172.8px;
+  height: 248.4px;
   background: white;
   border-radius: 8px;
   overflow: hidden;
@@ -70,9 +70,9 @@ const posterContainerStyle = css`
     pointer-events: auto;
   }
 
-  @media (max-width: 600px) {
-    width: 192px;
-    height: 276px;
+  @media (max-width: 300px) {
+    width: 172.8px;
+    height: 248.4px;
   }
 `;
 
@@ -110,7 +110,7 @@ const descriptionStyle = css`
   pointer-events: none;
 
   line-height: 1.5;
-  font-size: 15px;
+  font-size: 13px;
 
   /* ✨ 스크롤바 스타일 */
   &::-webkit-scrollbar {
@@ -122,7 +122,7 @@ const descriptionStyle = css`
     border-radius: 8px; /* ✨ 둥글게 */
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 300px) {
     font-size: 12px; /* ✅ 모바일에서 폰트 크기 더 축소 */
   }
 
@@ -137,10 +137,10 @@ const buttonStyle = css`
   transition: background-color 0.2s ease-in-out;
   border: none;
   cursor: pointer;
-  font-size: 0.83rem;
+  font-size: 0.735rem;
   text-align: center;
   width: 100%; /* ✅ 모바일에서도 꽉 차게 */
-  width: 192px;
+  width: 172.8px;
 
   &:hover {
     background-color: #2563eb;
@@ -148,9 +148,9 @@ const buttonStyle = css`
 
   /* ✅ 모바일에서 버튼이 너무 크면 더 작게 조정 */
   @media (max-width: 600px) {
-    font-size: 0.8rem;
+    font-size: 0.735rem;
     padding: 0.6rem;
-    width: 192px;
+    width: 172.8px;
   }
 `;
 
