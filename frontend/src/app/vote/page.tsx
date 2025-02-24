@@ -148,7 +148,7 @@ const buttonStyle = css`
 
   /* ✅ 모바일에서 버튼이 너무 크면 더 작게 조정 */
   @media (max-width: 600px) {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     padding: 0.6rem;
     width: 192px;
   }
@@ -296,7 +296,7 @@ export default function Vote() {
       </div>
 
       {/* 중간 여백 추가 */}
-      <div css={css`height: 70px;`} /> 
+      <div css={css`height: 35px;`} /> 
 
       {/* 아래쪽 4개 영화 */}
       <div css={gridContainerStyle}>
