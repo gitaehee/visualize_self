@@ -246,8 +246,9 @@ export default function Vote() {
       <div css={gridContainerStyle}>
         {movies.slice(0, 4).map((movie) => (
           <div key={movie.title} css={movieCardStyle}>
-            <div css={posterContainerStyle} onClick={() => toggleDescription(movie.title)}>
-              <div css={[descriptionStyle, activeMovie === movie.title && { opacity: 1, pointerEvents: "auto" }]}>
+            <div css={posterContainerStyle}>
+              {/* 🎯 마우스를 올리면 보이도록 hover 스타일만 사용 */}
+              <div css={descriptionStyle} className="description">
                 <p><strong>{movie.title}</strong></p>
                 <p>장르: {movie.genre}</p>
                 <p>감독: {movie.director}</p>
@@ -271,8 +272,9 @@ export default function Vote() {
       <div css={gridContainerStyle}>
         {movies.slice(4, 8).map((movie) => (
           <div key={movie.title} css={movieCardStyle}>
-            <div css={posterContainerStyle} onClick={() => toggleDescription(movie.title)}>
-              <div css={[descriptionStyle, activeMovie === movie.title && { opacity: 1, pointerEvents: "auto" }]}>
+            <div css={posterContainerStyle}>
+              {/* 🎯 hover 효과로 자동 표시 */}
+              <div css={descriptionStyle} className="description">
                 <p><strong>{movie.title}</strong></p>
                 <p>장르: {movie.genre}</p>
                 <p>감독: {movie.director}</p>
