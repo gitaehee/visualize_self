@@ -82,12 +82,12 @@ export default function Results() {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/results`);
-        if (!response.ok) {
-          throw new Error(`HTTP 오류 발생: ${response.status}`);
-        }
+        console.log("🔗 API 요청 중:", `${API_BASE_URL}/results`);
+        
+        // ✅ axios로 API 요청
+        const response = await axios.get(`${API_BASE_URL}/results`);
+        const data = response.data;
 
-        const data = await response.json();
         if (!data || typeof data !== "object") {
           throw new Error("API 응답이 올바른 JSON 형식이 아닙니다.");
         }
@@ -123,7 +123,7 @@ export default function Results() {
         setGenreVotes(formattedGenreVotes);
       } catch (error: any) {
         console.error("🚨 결과 가져오기 실패:", error);
-        setError(error.message);
+        setError(error.response?.data?.message || "데이터를 불러오는 데 실패했습니다.");
       }
     };
 
