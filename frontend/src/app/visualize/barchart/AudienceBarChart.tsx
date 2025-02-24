@@ -1,48 +1,51 @@
-import React, { useEffect, useState } from "react";
+// AudienceBarChart.tsx
+"use client";
+
 import { ResponsiveBar } from "@nivo/bar";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
+interface AudienceData {
+  year: number;
+  audience: number;
+}
+
 const AudienceBarChart = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<AudienceData[]>([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/audience").then((res) => {
-      const formattedData = res.data.map((item) => ({
-        year: item.year.toString(),
-        audience: item.audience,
-      }));
-      setData(formattedData);
-    });
+    axios
+      .get<AudienceData[]>("http://localhost:5000/api/audience")
+      .then((res) => {
+        setData(res.data);
+      });
   }, []);
 
   return (
-    <div style={{ height: "500px" }}>
+    <div style={{ width: "100%", height: "500px" }}>
       <ResponsiveBar
         data={data}
         keys={["audience"]}
         indexBy="year"
-        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: 50, bottom: 50, left: 70 }}
         padding={0.3}
         colors={{ scheme: "nivo" }}
         axisBottom={{
           tickRotation: -45,
-          legend: "연도",
-          legendPosition: "middle",
-          legendOffset: 40,
         }}
-        axisLeft={{
-          legend: "관객 수",
-          legendPosition: "middle",
-          legendOffset: -50,
-        }}
-        tooltip={({ id, value, indexValue }) => (
-          <strong>
-            {indexValue}년: {value.toLocaleString()}명
-          </strong>
+        label={(d) => `${d.value.toLocaleString()}`}
+        tooltip={({ indexValue, value }) => (
+          <div
+            style={{
+              padding: "8px",
+              background: "white",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+              borderRadius: "4px",
+            }}
+          >
+            <strong>{indexValue}년</strong>: {value.toLocaleString()}명
+          </div>
         )}
-        animate={true}
-        motionStiffness={90}
-        motionDamping={15}
       />
     </div>
   );
