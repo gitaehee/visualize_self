@@ -137,7 +137,7 @@ const buttonStyle = css`
   transition: background-color 0.2s ease-in-out;
   border: none;
   cursor: pointer;
-  font-size: 0.735rem;
+  font-size: 0.7rem;
   text-align: center;
   width: 100%; /* ✅ 모바일에서도 꽉 차게 */
   width: 172.8px;
@@ -148,7 +148,7 @@ const buttonStyle = css`
 
   /* ✅ 모바일에서 버튼이 너무 크면 더 작게 조정 */
   @media (max-width: 600px) {
-    font-size: 0.735rem;
+    font-size: 0.7rem;
     padding: 0.6rem;
     width: 172.8px;
   }
