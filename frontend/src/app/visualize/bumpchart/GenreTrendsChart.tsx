@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ResponsiveAreaBump } from "@nivo/bump";
 import { API_BASE_URL } from "@/const/baseApi";
-
 const GenreTrendsAreaBump = () => {
   const [data, setData] = useState([]);
 
@@ -34,34 +33,59 @@ const GenreTrendsAreaBump = () => {
     "#60a3bc",
   ];
 
-  const CustomTooltip = ({ serie }) => (
-    <div
-      style={{
-        padding: "12px",
-        background: "rgba(255, 255, 255, 0.9)",
-        border: "1px solid #ccc",
-        borderRadius: "6px",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-        color: "#333",
-        fontFamily: "Pretendard, sans-serif",
-        fontSize: "16px",
-        textAlign: "center",
-      }}
-    >
-      <strong>{serie.id}</strong>
-      <div style={{ marginTop: "5px" }}>
-        📅 연도: {serie.data.x}년
-        <br />
-        🎬 개봉 수: {serie.data.y}편
+  const CustomTooltip = ({ serie, x, y }) => {
+    console.log(serie, "x", x, "y", y, "000000");
+    return (
+      <div
+        style={{
+          padding: "12px",
+          background: "rgba(255, 255, 255, 0.9)",
+          border: "1px solid #ccc",
+          borderRadius: "6px",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+          color: "#333",
+          fontFamily: "Pretendard, sans-serif",
+          fontSize: "16px",
+          textAlign: "center",
+        }}
+      >
+        <strong>{serie.id}</strong>
+        {/* <div style={{ marginTop: "5px" }}>
+          📅 연도: {x}년
+          <br />
+          🎬 개봉 수: {y}편
+        </div> */}
       </div>
-    </div>
-  );
+    );
+  };
+
+  if (data.length === 0) {
+    return (
+      <div
+        style={{
+          height: "800px",
+          width: "1200px",
+          backgroundColor: "#222",
+          padding: "20px",
+          borderRadius: "10px",
+          fontFamily: "Pretendard, sans-serif",
+          fontWeight: "bold",
+          color: "#fff",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        데이터를 불러오는 중입니다...
+      </div>
+    );
+  }
 
   return (
     <div
       style={{
-        height: "800px", // MovieBarChart와 동일한 높이로 설정 추천
-        width: "1200px", // MovieBarChart와 동일한 너비로 설정 추천
+        height: "800px",
+        width: "1200px",
         backgroundColor: "#222",
         padding: "20px",
         borderRadius: "10px",

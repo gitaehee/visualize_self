@@ -72,3 +72,32 @@ def audience():
     ]
     print(response)
     return jsonify(response)
+
+@movies_bp.route("/audience-ratio", methods=["GET"])
+def audience_ratio():
+    df = load_movies_data()
+    df = add_release_year(df)
+
+    if '대표국적' not in df.columns:
+        return jsonify({"error": "대표국적 컬럼이 없습니다."}), 400
+
+    df['관객수'] = df['관객수'].str.replace(',', '').astype(int)
+
+    audience_data = df.groupby(['개봉연도', '대표국적'])['관객수'].sum().unstack(fill_value=0).reset_index()
+
+    response = []
+    for _, row in audience_data.iterrows():
+        year = int(row['개봉연도'])
+        movies_this_year = df[df['개봉연도'] == year][['영화명', '대표국적', '관객수']]
+
+        movie_list = {}
+        for country in movies_this_year['대표국적'].unique():
+            sorted_movies = movies_this_year[movies_this_year['대표국적'] == country].sort_values(by='관객수', ascending=False)
+            movie_list[country] = sorted_movies['영화명'].tolist()
+
+        year_data = {"year": year, "movies": movie_list}
+        for country in audience_data.columns[1:]:
+            year_data[country] = int(row[country])
+        response.append(year_data)
+
+    return jsonify(response)
