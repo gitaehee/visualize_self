@@ -23,13 +23,24 @@ const titleStyle = css`
 const gridContainerStyle = css`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
   width: 100%;
   max-width: 900px;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
   justify-items: center;
+
+  /* ✅ 모바일 대응: 작은 화면에서는 2열 */
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* ✅ 더 작은 화면에서는 1열 */
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const movieCardStyle = css`
@@ -38,6 +49,8 @@ const movieCardStyle = css`
   align-items: center;
   text-align: center;
   position: relative;
+  width: 100%; /* ✅ 부모 컨테이너가 유동적으로 조정됨 */
+  max-width: 245px; /* ✅ 버튼과 크기 맞추기 */
 `;
 
 const posterContainerStyle = css`
@@ -55,6 +68,11 @@ const posterContainerStyle = css`
   &:hover .description {
     opacity: 1;
     pointer-events: auto;
+  }
+
+  @media (max-width: 600px) {
+    width: 192px;
+    height: 276px;
   }
 `;
 
@@ -104,6 +122,10 @@ const descriptionStyle = css`
     border-radius: 8px; /* ✨ 둥글게 */
   }
 
+  @media (max-width: 600px) {
+    font-size: 12px; /* ✅ 모바일에서 폰트 크기 더 축소 */
+  }
+
 `;
 
 const buttonStyle = css`
@@ -117,10 +139,18 @@ const buttonStyle = css`
   cursor: pointer;
   font-size: 1rem;
   text-align: center;
+  width: 100%; /* ✅ 모바일에서도 꽉 차게 */
   width: 245px;
 
   &:hover {
     background-color: #2563eb;
+  }
+
+  /* ✅ 모바일에서 버튼이 너무 크면 더 작게 조정 */
+  @media (max-width: 600px) {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+    width: 192px;
   }
 `;
 
@@ -240,7 +270,7 @@ export default function Vote() {
 
   return (
     <div css={containerStyle}>
-      <h1 css={titleStyle}>영화 예약</h1>
+      <h1 css={titleStyle}>영화 예매</h1>
       <p>포스터를 클릭하면 상세 내용이 보여요!</p>
       {/* 위쪽 4개 영화 */}
       <div css={gridContainerStyle}>
@@ -259,7 +289,7 @@ export default function Vote() {
               <img src={movie.poster} alt={movie.title} css={posterStyle} />
             </div>
             <button css={buttonStyle} onClick={() => handleVote(movie.title)}>
-              {movie.title} 예약
+              {movie.title} 예매
             </button>
           </div>
         ))}
@@ -285,7 +315,7 @@ export default function Vote() {
               <img src={movie.poster} alt={movie.title} css={posterStyle} />
             </div>
             <button css={buttonStyle} onClick={() => handleVote(movie.title)}>
-              {movie.title} 예약
+              {movie.title} 예매
             </button>
           </div>
         ))}
