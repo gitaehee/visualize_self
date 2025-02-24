@@ -4052,10 +4052,10 @@ export default function Explore() {
                     fontSize: "14px",
                     backgroundColor: "plum",
                     borderRadius: "8px",
-                    position: "absolute",
-                    left: `${left}px`, // ✅ X 위치 보정
-                    top: `${top}px`, // ✅ Y 위치 보정
-                    transform: "translate(20%, -110%)", // ✅ 중앙 정렬 + 약간 위로 조정
+                    //position: "absolute",
+                    //left: `${left}px`, // ✅ X 위치 보정
+                    //top: `${top}px`, // ✅ Y 위치 보정
+                    transform: "translate(0%, -50%)", // ✅ 중앙 정렬 + 약간 위로 조정
                     pointerEvents: "none",
                     whiteSpace: "nowrap",
                 }}>

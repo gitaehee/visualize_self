@@ -6,14 +6,14 @@ import json
 vote_bp = Blueprint('vote', __name__, url_prefix='/api')
 
 votes = {
-    "무서워": 0,
-    "애프터 선셋": 0,
-    "태정태세문단세": 0,
-    "ufo 판타지": 0,
-    "액션히어로": 0,
-    "아마..존": 0,
-    "우는 남자": 0,
-    "장화 안 신은 고양이": 0
+    "Red Room": 0,
+    "After Sunset": 0,
+    "왕빙어모": 0,
+    "The seekers of stars": 0,
+    "CODENAME:000": 0,
+    "UFO: the silent invasion": 0,
+    "TITANIC": 0,
+    "장화 싫은 고양이": 0
 }
 
 @vote_bp.route("/vote", methods=["POST", "OPTIONS"])
