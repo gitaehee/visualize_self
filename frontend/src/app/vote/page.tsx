@@ -38,7 +38,7 @@ const gridContainerStyle = css`
   }
 
   /* ✅ 더 작은 화면에서는 1열 */
-  @media (max-width: 600px) {
+  @media (max-width: 400px) {
     grid-template-columns: repeat(1, 1fr);
   }
 `;
@@ -50,7 +50,7 @@ const movieCardStyle = css`
   text-align: center;
   position: relative;
   width: 100%; /* ✅ 부모 컨테이너가 유동적으로 조정됨 */
-  max-width: 245px; /* ✅ 버튼과 크기 맞추기 */
+  max-width: 192px; /* ✅ 버튼과 크기 맞추기 */
 `;
 
 const posterContainerStyle = css`
@@ -58,8 +58,8 @@ const posterContainerStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 245px;
-  height: 352px;
+  width: 192px;
+  height: 276px;
   background: white;
   border-radius: 8px;
   overflow: hidden;
@@ -140,7 +140,7 @@ const buttonStyle = css`
   font-size: 1rem;
   text-align: center;
   width: 100%; /* ✅ 모바일에서도 꽉 차게 */
-  width: 245px;
+  width: 192px;
 
   &:hover {
     background-color: #2563eb;
@@ -148,7 +148,7 @@ const buttonStyle = css`
 
   /* ✅ 모바일에서 버튼이 너무 크면 더 작게 조정 */
   @media (max-width: 600px) {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     padding: 0.6rem;
     width: 192px;
   }
@@ -296,7 +296,7 @@ export default function Vote() {
       </div>
 
       {/* 중간 여백 추가 */}
-      <div css={css`height: 70px;`} /> 
+      <div css={css`height: 35px;`} /> 
 
       {/* 아래쪽 4개 영화 */}
       <div css={gridContainerStyle}>
