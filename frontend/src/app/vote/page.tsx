@@ -137,7 +137,7 @@ const buttonStyle = css`
   transition: background-color 0.2s ease-in-out;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.83rem;
   text-align: center;
   width: 100%; /* ✅ 모바일에서도 꽉 차게 */
   width: 192px;
