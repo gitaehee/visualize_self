@@ -4,12 +4,14 @@ from .movies import (
     load_movies_data,
     process_top10_movies,
     add_release_year,
-    get_genre_counts_per_year
+    get_genre_counts_per_year,
+    load_audience_data
 )
 
 __all__ = [
     "load_movies_data",
     "process_top10_movies",
     "add_release_year",
-    "get_genre_counts_per_year"
+    "get_genre_counts_per_year",
+    "load_audience_data"
 ]

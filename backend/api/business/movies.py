@@ -5,12 +5,21 @@ import math
 # ✅ 현재 파일 위치를 기준으로 CSV 경로 설정
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = os.path.join(BASE_DIR, "../data/top200_movies_with_posters.csv")
+AUDIENCE_PATH = os.path.join(BASE_DIR, "../data/연도별관객수및매출액.csv")
 
 def load_movies_data():
     """CSV 파일을 읽어 데이터프레임으로 반환"""
     if not os.path.exists(CSV_PATH):
         raise FileNotFoundError(f"CSV 파일을 찾을 수 없습니다: {CSV_PATH}")
     
+    df = pd.read_csv(CSV_PATH)
+    df.columns = df.columns.str.strip()
+    df["id"] = df.index  # 고유 ID 추가
+    return df
+
+def load_audience_data():
+    if not os.path.exists(AUDIENCE_PATH):
+        raise FileNotFoundError(f"CSV 파일을 찾을 수 없습니다: {CSV_PATH}")
     df = pd.read_csv(CSV_PATH)
     df.columns = df.columns.str.strip()
     df["id"] = df.index  # 고유 ID 추가

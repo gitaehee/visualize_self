@@ -3,7 +3,8 @@ from api.business import (
     load_movies_data,
     process_top10_movies,
     add_release_year,
-    get_genre_counts_per_year
+    get_genre_counts_per_year,
+    load_audience_data
 )
 import pandas as pd
 
@@ -13,9 +14,7 @@ movies_bp = Blueprint('movies', __name__, url_prefix='/api')
 # CSV 데이터 로드 및 전처리 (모듈 로딩 시 한 번 수행)
 df = load_movies_data()
 df = add_release_year(df)
-
-data = pd.read_csv('../data/연도별관객수및매출액.csv')
-
+data = load_audience_data()
 # 모든 연도의 목록 생성 (예: [최소연도, ..., 최대연도])
 ALL_YEARS = list(range(int(df["개봉연도"].min()), int(df["개봉연도"].max()) + 1))
 
