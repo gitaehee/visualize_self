@@ -179,7 +179,7 @@ const movies = [
     genre: "공포",
     director: "황동혁",
     actors: "신예은, 박정민",
-    runngingtime: "2시간",
+    runngingtime: "3시간",
     summary: "홍수로 인해 갑자기 묵게 된 호텔. 위층에서 먼저 올라간 아내의 목소리가 들리고, 빨간 문을 연 순간 수십 개의 똑같은 얼굴이 천천히 고개를 돌리는데..!",
     poster: "/posters/horror.svg",
   },
