@@ -39,7 +39,7 @@ const gridContainerStyle = css`
   }
 
   /* ✅ 더 작은 화면에서는 1열 */
-  @media (max-width: 350px) {
+  @media (max-width: 350px) { 
     grid-template-columns: repeat(1, 1fr);
   }
 `;
